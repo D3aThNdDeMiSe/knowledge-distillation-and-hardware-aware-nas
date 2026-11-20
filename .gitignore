@@ -1,0 +1,18 @@
+# datasets are downloaded automatically by the scripts
+data/
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+# submission archive
+*.zip
+
+# assignment handout and local tool state
+Assignment 4.pdf
+.claude/

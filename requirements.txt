@@ -1,0 +1,15 @@
+# Tested with Python 3.13 on Windows 11, NVIDIA RTX 5060 Laptop GPU (CUDA 12.8).
+# Install PyTorch matching your CUDA version first, e.g.
+#   pip install torch --index-url https://download.pytorch.org/whl/cu128
+# (a CPU-only torch also works for inference / ONNX export / benchmarking).
+torch>=2.4
+onnx>=1.16
+onnxruntime>=1.18
+optuna>=3.6
+numpy>=1.26
+pandas>=2.0
+pyarrow>=14
+pillow>=10
+psutil>=5.9
+matplotlib>=3.8
+reportlab>=4.0
