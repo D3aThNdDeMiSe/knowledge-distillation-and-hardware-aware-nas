@@ -1,0 +1,4 @@
+student,params_M,MMACs,baseline_top1,kd_top1,kd_gain_top1,baseline_top5,kd_top5,teacher_top1,compression_vs_teacher,speedup_vs_teacher_ort_1t
+mobilenetv2,2.352,88.09,74.56,77.76,3.2,93.35,95.08,78.12,10.1,10.9
+squeezenet,0.7767,91.68,71.61,74.07,2.46,92.41,93.77,78.12,30.5,14.2
+efficientnet_lite0,3.4991,115.66,75.48,78.48,3.0,93.53,95.29,78.12,6.8,8.3

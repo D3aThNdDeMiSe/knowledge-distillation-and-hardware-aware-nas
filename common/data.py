@@ -39,6 +39,10 @@ HF_LOCAL = {("cifar10", "train"): "c10_train", ("cifar10", "test"): "c10_test",
             ("cifar100", "train"): "c100_train", ("cifar100", "test"): "c100_test"}
 
 
+# The Hugging Face copy of CIFAR-100 lists class 26 as "cra"; the official name is "crab".
+NAME_FIXES = {"cra": "crab"}
+
+
 def _build_cache(name, split, root):
     """Download (if needed) the parquet file and decode the PNG bytes into a uint8 array."""
     import io
@@ -59,7 +63,7 @@ def _build_cache(name, split, root):
     x = np.stack([np.asarray(Image.open(io.BytesIO(d["bytes"])).convert("RGB")) for d in imgs])
     y = np.asarray(table.column(label_col).to_pylist(), dtype=np.int64)
     meta = json.loads(table.schema.metadata[b"huggingface"])
-    names = meta["info"]["features"][label_col]["names"]
+    names = [NAME_FIXES.get(n, n) for n in meta["info"]["features"][label_col]["names"]]
     out = os.path.join(root, f"{name}_{split}.npz")
     np.savez(out, x=x.astype(np.uint8), y=y, classes=np.array(names))
     return out
@@ -79,7 +83,7 @@ def class_names(name, root=DATA_ROOT):
     path = os.path.join(root, f"{name}_test.npz")
     if not os.path.exists(path):
         _build_cache(name, "test", root)
-    return [str(c) for c in np.load(path)["classes"]]
+    return [NAME_FIXES.get(str(c), str(c)) for c in np.load(path)["classes"]]
 
 
 def normalize(x, name):

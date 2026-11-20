@@ -1,0 +1,22 @@
+
+=== kd_mobilenetv2 | ONNX Runtime (CPU) | cifar100 | input 32x32 | 8 images in 62.8 ms ===
+image                        true             prediction         conf  top-3
+01190_raccoon.png            raccoon          raccoon            1.00  OK  chimpanzee 0.00, possum 0.00
+01313_raccoon.png            raccoon          raccoon            1.00  OK  spider 0.00, skunk 0.00
+03030_spider.png             spider           spider             1.00  OK  butterfly 0.00, crab 0.00
+03416_willow_tree.png        willow_tree      willow_tree        1.00  OK  maple_tree 0.00, oak_tree 0.00
+04677_leopard.png            leopard          leopard            1.00  OK  tiger 0.00, wolf 0.00
+07966_beaver.png             beaver           snail              0.88      beaver 0.12, otter 0.00
+08163_plain.png              plain            plain              1.00  OK  forest 0.00, sea 0.00
+08206_seal.png               seal             otter              0.94      seal 0.06, pear 0.00
+
+=== nas_best | ONNX Runtime (CPU) | cifar10 | input 32x32 | 8 images in 11.0 ms ===
+image                        true             prediction         conf  top-3
+02252_cat.png                cat              cat                1.00  OK  dog 0.00, deer 0.00
+05781_airplane.png           airplane         airplane           1.00  OK  deer 0.00, ship 0.00
+06247_airplane.png           airplane         airplane           0.99  OK  cat 0.01, bird 0.00
+06838_automobile.png         automobile       automobile         1.00  OK  truck 0.00, airplane 0.00
+07755_horse.png              horse            horse              1.00  OK  deer 0.00, dog 0.00
+08335_horse.png              horse            horse              0.95  OK  cat 0.04, dog 0.00
+08968_ship.png               ship             ship               1.00  OK  truck 0.00, automobile 0.00
+09442_deer.png               deer             deer               1.00  OK  bird 0.00, horse 0.00

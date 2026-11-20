@@ -1,0 +1,10 @@
+model                          backend                dataset    res    top1    top5     img/s
+----------------------------------------------------------------------------------------------
+teacher_resnet50               ONNX Runtime (CPU)     cifar100    32  78.17%  94.74%     122.5
+baseline_mobilenetv2           ONNX Runtime (CPU)     cifar100    32  74.61%  93.33%     872.9
+baseline_squeezenet            ONNX Runtime (CPU)     cifar100    32  71.58%  92.40%     997.4
+baseline_efficientnet_lite0    ONNX Runtime (CPU)     cifar100    32  75.50%  93.58%     764.1
+kd_mobilenetv2                 ONNX Runtime (CPU)     cifar100    32  77.82%  95.06%     878.7
+kd_squeezenet                  ONNX Runtime (CPU)     cifar100    32  74.05%  93.81%     981.7
+kd_efficientnet_lite0          ONNX Runtime (CPU)     cifar100    32  78.45%  95.26%     769.7
+nas_best                       ONNX Runtime (CPU)     cifar10     32  93.07%  99.80%    1309.3

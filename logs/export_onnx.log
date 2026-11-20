@@ -1,0 +1,10 @@
+teacher_resnet50               -> onnx_models/teacher_resnet50.onnx          90.350 MB  max|diff|=4.77e-06  argmax agreement=100%
+baseline_mobilenetv2           -> onnx_models/baseline_mobilenetv2.onnx       8.959 MB  max|diff|=3.81e-06  argmax agreement=100%
+baseline_squeezenet            -> onnx_models/baseline_squeezenet.onnx        2.966 MB  max|diff|=5.25e-06  argmax agreement=100%
+baseline_efficientnet_lite0    -> onnx_models/baseline_efficientnet_lite0.onnx   13.317 MB  max|diff|=2.74e-06  argmax agreement=100%
+kd_mobilenetv2                 -> onnx_models/kd_mobilenetv2.onnx             8.959 MB  max|diff|=3.81e-06  argmax agreement=100%
+kd_squeezenet                  -> onnx_models/kd_squeezenet.onnx              2.966 MB  max|diff|=6.68e-06  argmax agreement=100%
+kd_efficientnet_lite0          -> onnx_models/kd_efficientnet_lite0.onnx     13.317 MB  max|diff|=5.72e-06  argmax agreement=100%
+nas_best                       -> onnx_models/nas_best.onnx                   0.761 MB  max|diff|=5.72e-06  argmax agreement=100%
+
+Exported 8 models to D:\Assignments & Projects\Edge Computing\Assignment 4\onnx_models

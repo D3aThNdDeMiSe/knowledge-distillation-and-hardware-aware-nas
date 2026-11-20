@@ -19,7 +19,7 @@ import onnx
 import onnxruntime as ort
 import torch
 
-from common.utils import ONNX_DIR, RESULTS_DIR, read_json, write_csv, write_json
+from common.utils import ONNX_DIR, RESULTS_DIR, ROOT, read_json, write_csv, write_json
 from common.zoo import ALL_MODEL_IDS, available_models, load_model, onnx_path
 
 
@@ -42,7 +42,7 @@ def export_one(model_id, opset=17):
     out = sess.run(None, {"input": x.numpy()})[0]
     max_diff = float(np.abs(ref - out).max())
     agree = float((ref.argmax(1) == out.argmax(1)).mean())
-    row = {"model": model_id, "onnx_file": os.path.relpath(path), "input_shape": f"Nx3x{res}x{res}",
+    row = {"model": model_id, "onnx_file": os.path.relpath(path, ROOT).replace(os.sep, "/"), "input_shape": f"Nx3x{res}x{res}",
            "opset": opset, "size_mb": round(os.path.getsize(path) / 2 ** 20, 3),
            "max_abs_diff_vs_torch": f"{max_diff:.2e}", "top1_agreement": agree}
     print(f"{model_id:30s} -> {row['onnx_file']:40s} {row['size_mb']:8.3f} MB  "

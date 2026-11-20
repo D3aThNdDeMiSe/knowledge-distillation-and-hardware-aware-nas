@@ -15,7 +15,29 @@ the best architecture from scratch on CIFAR-10, and ONNX deployment.
 
 The technical report is in [`docs/Technical_Report.pdf`](docs/Technical_Report.pdf).
 
-<!-- RESULTS -->
+## Results at a glance
+
+**Q1 — CIFAR-100, 60 epochs per student, identical recipe for baseline and KD (test top-1, %)**
+
+| Model | Params | Baseline | Distilled (KD) | Gain | ONNX size | CPU latency (ORT, 1 thread) |
+|---|---|---|---|---|---|---|
+| MobileNetV2 | 2.35 M | 74.56 | **77.76** | +3.20 | 9.0 MB | 3.72 ms |
+| SqueezeNet | 0.78 M | 71.61 | **74.07** | +2.46 | 3.0 MB | 2.86 ms |
+| EfficientNet-Lite0 | 3.50 M | 75.48 | **78.48** | +3.00 | 13.3 MB | 4.88 ms |
+| ResNet-50 teacher | 23.71 M | 78.12 | — | — | 90.3 MB | 40.70 ms |
+
+* Distillation improves every student by 2.46–3.20 points; the distilled EfficientNet-Lite0 (78.48%) even beats its teacher (78.12%) with 6.8x fewer parameters.
+* Ablation (MobileNetV2): baseline 74.56% → soft targets only 77.36% → soft targets + feature hints 77.76%.
+* Distilled students run 8.3–14.2x faster than the teacher on one CPU thread (ONNX Runtime).
+
+**Q2 — hardware-aware NAS on CIFAR-10**
+
+* Optuna TPE, 50 trials: 35 accepted, 15 rejected for breaking a deployment constraint (latency ≤ 2.0 ms, ONNX size ≤ 1.5 MB, peak memory ≤ 16 MB, all measured on the CPU).
+* Selected (trial 49): `r32 stem32 | ds-k5-relu6 x3 c32 | conv-k5-hswish x1 c64 | mb4-k7-hswish x3 c64 | head0`
+* Trained from scratch for 60 epochs: **93.06% test top-1** (ONNX Runtime 93.07%), 198 k parameters, 0.76 MB, 1.44 ms per image on one CPU thread, 11.5 MB peak memory.
+
+Full tables: `results/benchmark.csv`, `results/q1/kd_vs_baseline.csv`, `results/q2/`. Figures: `results/figures/`.
+
 
 ---
 
@@ -43,6 +65,7 @@ The technical report is in [`docs/Technical_Report.pdf`](docs/Technical_Report.p
 ├── export_onnx.py          exports every model to ONNX and checks it against PyTorch
 ├── benchmark.py            automated benchmarking -> results/benchmark.csv
 ├── report/                 make_figures.py + make_report.py -> docs/Technical_Report.pdf
+├── docs/                   Technical_Report.pdf
 ├── run_q1.sh / run_q2.sh   complete pipelines
 ├── checkpoints/            trained models (*.pt)
 ├── onnx_models/            exported models (*.onnx) + model_cards.json
@@ -81,7 +104,10 @@ python -m q1_kd.train_baseline --epochs 60
 # 3. Distillation: 3 students, 60 epochs        -> checkpoints/kd_{mobilenetv2,squeezenet,efficientnet_lite0}.pt
 python -m q1_kd.train_kd --epochs 60 --T 4 --alpha 0.9 --beta 2 --feat-layers mid final
 ```
-or everything at once: `bash run_q1.sh` (about 3 h on an RTX 5060 Laptop GPU).
+or everything at once: `bash run_q1.sh` (about 4 h on an RTX 5060 Laptop GPU: teacher 48 min, baselines 80 min, KD 100 min).
+
+Loss-term ablation reported in the PDF (soft targets only, no feature hints):
+`python -m q1_kd.train_kd --models mobilenetv2 --epochs 60 --feat-layers none --tag kd_logits` -> `checkpoints/kd_logits_mobilenetv2.pt`, `logs/q1_kd_ablation_logits_only.log`.
 
 Useful KD options: `--T` (temperature), `--alpha` (soft-target weight; hard-label weight = 1-alpha),
 `--beta` (feature-loss weight), `--feat-layers mid final | none`, `--no-hard`, `--tag` (prefix for ablation runs).
@@ -94,7 +120,7 @@ python -m q2_nas.search --trials 50 --epochs 8 --max-latency-ms 2.0 --max-size-m
 # 5. Train the selected architecture from scratch   -> checkpoints/nas_best.pt
 python -m q2_nas.train_best --epochs 60
 ```
-or `bash run_q2.sh` (about 45 min). Measure any ONNX model on its own:
+or `bash run_q2.sh` (about 35 min: search 23 min + final training 10 min). Measure any ONNX model on its own:
 `python -m q2_nas.hardware --onnx onnx_models/nas_best.onnx --res 32`.
 
 ### Deployment, inference and benchmarking
@@ -123,7 +149,7 @@ Model ids: `teacher_resnet50`, `baseline_mobilenetv2`, `baseline_squeezenet`, `b
 | 1 | Teacher model | `q1_kd/models/resnet.py`, `q1_kd/train_teacher.py`, `checkpoints/teacher_resnet50.pt` |
 | 2 | Student architectures | `q1_kd/models/{mobilenetv2,squeezenet,efficientnet_lite}.py` |
 | 3 | Baseline student models | `q1_kd/train_baseline.py`, `checkpoints/baseline_*.pt` |
-| 4 | Knowledge distillation | `q1_kd/kd.py`, `q1_kd/train_kd.py`, `checkpoints/kd_*.pt` |
+| 4 | Knowledge distillation | `q1_kd/kd.py`, `q1_kd/train_kd.py`, `checkpoints/kd_*.pt` (+ ablation `kd_logits_mobilenetv2.pt`) |
 | 5 | NAS search space | `q2_nas/search_space.py`, `q2_nas/generator.py` |
 | 6 | NAS algorithm | `q2_nas/search.py` (Optuna TPE) + `q2_nas/hardware.py` |
 | 7 | NAS results | `results/q2/best_architecture.json`, `results/q2/search_history.{csv,json}`, `results/q2/optuna_trials.csv` |

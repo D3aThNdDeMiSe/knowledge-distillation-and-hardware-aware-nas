@@ -1,0 +1,16 @@
+CPU: AMD64 Family 25 Model 117 Stepping 2, AuthenticAMD | torch 2.8.0+cu128 | device for accuracy: cuda
+teacher_resnet50              23.705M   1298.0MMAC  top1 torch  78.12 onnx  78.17 | ORT 1t  40.703ms 4t  19.392ms | torch 1t  74.254ms |  90.350MB | mem 104.9MB
+baseline_mobilenetv2           2.352M     88.1MMAC  top1 torch  74.56 onnx  74.61 | ORT 1t   3.699ms 4t   2.088ms | torch 1t  14.047ms |   8.959MB | mem 22.27MB
+baseline_squeezenet            0.777M     91.7MMAC  top1 torch  71.61 onnx  71.58 | ORT 1t   3.074ms 4t   1.711ms | torch 1t  12.350ms |   2.966MB | mem 15.11MB
+baseline_efficientnet_lite0    3.499M    115.7MMAC  top1 torch  75.48 onnx  75.50 | ORT 1t   4.954ms 4t   2.511ms | torch 1t  15.332ms |  13.317MB | mem 27.87MB
+kd_mobilenetv2                 2.352M     88.1MMAC  top1 torch  77.76 onnx  77.82 | ORT 1t   3.720ms 4t   2.044ms | torch 1t  13.452ms |   8.959MB | mem 21.93MB
+kd_squeezenet                  0.777M     91.7MMAC  top1 torch  74.07 onnx  74.05 | ORT 1t   2.862ms 4t   1.739ms | torch 1t  11.698ms |   2.966MB | mem 14.68MB
+kd_efficientnet_lite0          3.499M    115.7MMAC  top1 torch  78.48 onnx  78.45 | ORT 1t   4.882ms 4t   2.512ms | torch 1t  14.946ms |  13.317MB | mem 26.73MB
+nas_best                       0.198M     31.4MMAC  top1 torch  93.06 onnx  93.07 | ORT 1t   1.435ms 4t   0.974ms | torch 1t   4.271ms |   0.761MB | mem 11.52MB
+
+KD vs baseline (CIFAR-100 top-1):
+  mobilenetv2          baseline  74.56  KD  77.76  gain +3.20
+  squeezenet           baseline  71.61  KD  74.07  gain +2.46
+  efficientnet_lite0   baseline  75.48  KD  78.48  gain +3.00
+
+Saved -> D:\Assignments & Projects\Edge Computing\Assignment 4\results\benchmark.csv

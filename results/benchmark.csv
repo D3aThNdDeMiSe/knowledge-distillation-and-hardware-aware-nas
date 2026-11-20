@@ -1,0 +1,9 @@
+model,group,arch,dataset,input,params_M,MMACs,ckpt_MB,onnx_MB,top1_torch,top5_torch,top1_onnx,top5_onnx,ort_throughput_img_s,torch_cpu_lat_ms_1t,ort_lat_ms_1t,ort_lat_p95_ms_1t,ort_lat_ms_4t,ort_lat_p95_ms_4t,peak_mem_MB
+teacher_resnet50,teacher,resnet50,cifar100,32x32,23.7053,1298.01,45.41,90.35,78.12,94.7,78.17,94.74,124.0,74.254,40.703,43.576,19.392,20.587,104.9
+baseline_mobilenetv2,baseline,mobilenetv2,cifar100,32x32,2.352,88.09,9.199,8.959,74.56,93.35,74.61,93.33,860.8,14.047,3.699,4.348,2.088,2.59,22.27
+baseline_squeezenet,baseline,squeezenet,cifar100,32x32,0.7767,91.68,3.032,2.966,71.61,92.41,71.58,92.4,991.4,12.35,3.074,3.589,1.711,2.271,15.11
+baseline_efficientnet_lite0,baseline,efficientnet_lite0,cifar100,32x32,3.4991,115.66,13.602,13.317,75.48,93.53,75.5,93.58,766.0,15.332,4.954,5.645,2.511,3.132,27.87
+kd_mobilenetv2,kd,mobilenetv2,cifar100,32x32,2.352,88.09,9.198,8.959,77.76,95.08,77.82,95.06,876.4,13.452,3.72,4.435,2.044,2.603,21.93
+kd_squeezenet,kd,squeezenet,cifar100,32x32,0.7767,91.68,3.031,2.966,74.07,93.77,74.05,93.81,995.9,11.698,2.862,3.466,1.739,2.27,14.68
+kd_efficientnet_lite0,kd,efficientnet_lite0,cifar100,32x32,3.4991,115.66,13.6,13.317,78.48,95.29,78.45,95.26,768.7,14.946,4.882,5.961,2.512,3.179,26.73
+nas_best,nas,nas,cifar10,32x32,0.1982,31.44,0.802,0.761,93.06,99.8,93.07,99.8,1307.5,4.271,1.435,1.845,0.974,1.401,11.52

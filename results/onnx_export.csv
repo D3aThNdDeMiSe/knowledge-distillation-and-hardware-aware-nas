@@ -1,0 +1,9 @@
+model,onnx_file,input_shape,opset,size_mb,max_abs_diff_vs_torch,top1_agreement
+teacher_resnet50,onnx_models/teacher_resnet50.onnx,Nx3x32x32,17,90.35,4.77e-06,1.0
+baseline_mobilenetv2,onnx_models/baseline_mobilenetv2.onnx,Nx3x32x32,17,8.959,3.81e-06,1.0
+baseline_squeezenet,onnx_models/baseline_squeezenet.onnx,Nx3x32x32,17,2.966,5.25e-06,1.0
+baseline_efficientnet_lite0,onnx_models/baseline_efficientnet_lite0.onnx,Nx3x32x32,17,13.317,2.74e-06,1.0
+kd_mobilenetv2,onnx_models/kd_mobilenetv2.onnx,Nx3x32x32,17,8.959,3.81e-06,1.0
+kd_squeezenet,onnx_models/kd_squeezenet.onnx,Nx3x32x32,17,2.966,6.68e-06,1.0
+kd_efficientnet_lite0,onnx_models/kd_efficientnet_lite0.onnx,Nx3x32x32,17,13.317,5.72e-06,1.0
+nas_best,onnx_models/nas_best.onnx,Nx3x32x32,17,0.761,5.72e-06,1.0

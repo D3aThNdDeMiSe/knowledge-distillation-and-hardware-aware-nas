@@ -56,19 +56,22 @@ def bullets(items):
     return [P(f"&bull;&nbsp; {t}") for t in items]
 
 
-def table(rows, widths=None, font=7.5, header=True, wrap=True):
-    data = [[Paragraph(escape(str(c)), CELL) if wrap else str(c) for c in r] for r in rows]
+def table(rows, widths=None, font=7.5, header=True, wrap=True, pad=None):
+    cell = CELL if font >= 7.5 else ParagraphStyle(f"cell{font}", parent=CELL, fontSize=font, leading=font + 1.6)
+    data = [[Paragraph(escape(str(c)), cell) if wrap else str(c) for c in r] for r in rows]
     t = Table(data, colWidths=widths, repeatRows=1 if header else 0)
     style = [("GRID", (0, 0), (-1, -1), 0.4, colors.HexColor("#BBBBBB")),
              ("FONTSIZE", (0, 0), (-1, -1), font), ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
              ("ROWBACKGROUNDS", (0, 1), (-1, -1), [colors.white, colors.HexColor("#F5F8FC")])]
+    if pad is not None:
+        style += [("LEFTPADDING", (0, 0), (-1, -1), pad), ("RIGHTPADDING", (0, 0), (-1, -1), pad)]
     if header:
         style += [("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#1F3A5F")),
                   ("TEXTCOLOR", (0, 0), (-1, 0), colors.white)]
     t.setStyle(TableStyle(style))
     if header:
         for i, c in enumerate(rows[0]):
-            data[0][i] = Paragraph(f"<font color='white'><b>{escape(str(c))}</b></font>", CELL)
+            data[0][i] = Paragraph(f"<font color='white'><b>{escape(str(c))}</b></font>", cell)
     return t
 
 
@@ -139,7 +142,7 @@ def build(args):
 
     # ------------------------------------------------------------------ 1 overview
     story += [P("1. Overview and repository structure", H1),
-              P("All code was written from scratch in PyTorch for this assignment. Every number in this report "
+              P("All models and pipelines are implemented directly in PyTorch (no torchvision or timm model definitions). Every number in this report "
                 "is produced by the scripts in the repository and read automatically from the generated "
                 "CSV/JSON files in <font face='Courier'>results/</font>; the console captures in Section 5 are the real "
                 "outputs of the runs. The table maps every required deliverable to its files.")]
@@ -161,7 +164,7 @@ def build(args):
     story += [P("Engineering notes", H3)] + bullets([
         "<b>GPU-resident data pipeline</b> (common/data.py): the whole dataset is stored on the GPU as uint8 and "
         "random-crop (4 px reflection padding) + horizontal flip are applied per sample on the GPU. This removes the "
-        "Windows DataLoader bottleneck; one ResNet-50 epoch takes ~35 s.",
+        "Windows DataLoader bottleneck; one ResNet-50 epoch takes ~41 s, one student epoch 20-40 s.",
         "<b>Mixed precision</b>: bf16 autocast (no loss scaling needed). Memory layout was benchmarked: channels-last "
         "is ~20% faster for the dense ResNet-50, plain NCHW is ~25% faster for the depthwise-heavy students.",
         "<b>Identical recipes</b>: baselines and distilled students use the same optimiser (SGD, Nesterov, momentum 0.9, "
@@ -303,7 +306,9 @@ def build(args):
         "<b>Rejection of infeasible architectures</b>: candidates violating any deployment constraint are pruned "
         "immediately (Optuna PRUNED state, so TPE learns to avoid that region) and cost ~2 s instead of a training run.",
         "<b>Automated training/validation</b>: feasible candidates are trained for 8 epochs on 45k CIFAR-10 training "
-        "images and evaluated on a held-out 5k validation split (the test set is never used during search).",
+        "images and evaluated on a held-out 5k validation split (the test set is never used during search; the "
+        "per-epoch lines of the search log print this validation accuracy under the generic \"test\" label of the "
+        "shared training loop).",
         "<b>Resource-constrained selection</b>: score = val_acc x (latency/L<sub>max</sub>)<super>-0.05</super> x "
         "(size/S<sub>max</sub>)<super>-0.02</super> (MnasNet-style soft reward on top of the hard constraints) - among "
         "similarly accurate networks the faster and smaller one is preferred.",
@@ -362,7 +367,10 @@ def build(args):
             story += [P(f"Trained from scratch for {len(nas_curve)} epochs on the full CIFAR-10 training set: "
                         f"<b>test top-1 {fmt(nb.top1_torch if nb else nas_curve.test_top1.iloc[-1])}%</b>"
                         + (f" (ONNX Runtime: {fmt(nb.top1_onnx)}%), deployed latency {fmt(nb.ort_lat_ms_1t, 3)} ms "
-                           f"(1 thread), {fmt(nb.onnx_MB, 3)} MB." if nb else "."))]
+                           f"(1 thread), {fmt(nb.onnx_MB, 3)} MB. The latency re-measured in the final benchmark differs "
+                           f"from the search-time value ({fmt(m['latency_ms'], 3)} ms) because a laptop CPU's clock "
+                           f"and thermal state vary between sessions; both values are inside the "
+                           f"{best['constraints']['max_latency_ms']} ms budget." if nb else "."))]
             story += fig("q2_nas_best_curve.png", 9, "Figure 6 - Training the selected architecture from scratch.")
 
     # ------------------------------------------------------------------ 4 benchmark
@@ -370,27 +378,34 @@ def build(args):
         story += [PageBreak(), P("4. Benchmarking (benchmark.py)", H1),
                   P("All models were benchmarked on the same machine with the GPU idle. Accuracy is measured on the full "
                     "test set both with PyTorch and with the exported ONNX model in ONNX Runtime (CPU); latency is the "
-                    "median of 200 batch-1 runs after warm-up; throughput uses the full test set with batch 256 and all "
+                    "median of 200 (ONNX Runtime) or 100 (PyTorch eager) batch-1 runs after warm-up; throughput uses the full test set with batch 256 and all "
                     "CPU threads. Raw data: results/benchmark.csv.")]
-        rows = [["Model", "Data", "Params (M)", "MMACs", "ONNX MB", "Top-1 PT", "Top-1 ORT", "PT CPU 1t (ms)",
-                 "ORT 1t (ms)", "ORT 4t (ms)", "ORT img/s", "Peak mem (MB)"]]
+        rows = [["Model", "Params (M)", "MMACs", "ONNX (MB)", "Top-1 PyTorch", "Top-1 ORT", "PyTorch CPU 1t (ms)",
+                 "ORT 1t (ms)", "ORT 4t (ms)", "ORT (img/s)", "Peak mem (MB)"]]
         for r in bench.itertuples():
-            rows.append([r.model, r.dataset.upper().replace("CIFAR", "C"), fmt(r.params_M, 3), fmt(r.MMACs, 1),
-                         fmt(r.onnx_MB, 2), fmt(r.top1_torch), fmt(r.top1_onnx), fmt(r.torch_cpu_lat_ms_1t),
-                         fmt(r.ort_lat_ms_1t, 3), fmt(r.ort_lat_ms_4t, 3), fmt(r.ort_throughput_img_s, 0),
-                         fmt(r.peak_mem_MB, 1)])
-        story += [table(rows, widths=[3.3 * cm, 0.9 * cm, 1.2 * cm, 1.2 * cm, 1.1 * cm, 1.1 * cm, 1.2 * cm, 1.3 * cm,
-                                      1.2 * cm, 1.2 * cm, 1.2 * cm, 1.2 * cm], font=6.8)]
+            name = r.model + (" (CIFAR-10)" if r.dataset == "cifar10" else "")
+            rows.append([name, fmt(r.params_M, 2), fmt(r.MMACs, 0), fmt(r.onnx_MB, 2), fmt(r.top1_torch),
+                         fmt(r.top1_onnx), fmt(r.torch_cpu_lat_ms_1t), fmt(r.ort_lat_ms_1t), fmt(r.ort_lat_ms_4t),
+                         fmt(r.ort_throughput_img_s, 0), fmt(r.peak_mem_MB, 1)])
+        story += [table(rows, widths=[3.9 * cm, 1.15 * cm, 1.1 * cm, 1.15 * cm, 1.25 * cm, 1.15 * cm, 1.45 * cm,
+                                      1.2 * cm, 1.2 * cm, 1.2 * cm, 1.25 * cm], font=6.8, pad=3),
+                  P("Top-1 in %. CIFAR-100 for the Q1 models, CIFAR-10 for the NAS model. 1t / 4t = 1 or 4 CPU threads; "
+                    "img/s = full test set, batch 256, all threads.", SMALL)]
         story += fig("q1_accuracy_vs_latency.png", 12, "Figure 7 - Accuracy vs. CPU latency of the CIFAR-100 models.")
         if "teacher_resnet50" in b:
             t = b["teacher_resnet50"]
             fastest = min((r for r in bench.itertuples() if r.group == "kd"), key=lambda r: r.ort_lat_ms_1t)
+            n_ort_faster = int((bench.ort_lat_ms_1t < bench.torch_cpu_lat_ms_1t).sum())
+            max_acc_gap = float((bench.top1_torch - bench.top1_onnx).abs().max())
+            ort_txt = ("ONNX Runtime is faster than PyTorch eager on the CPU for every model"
+                       if n_ort_faster == len(bench) else
+                       f"ONNX Runtime is faster than PyTorch eager on the CPU for {n_ort_faster} of {len(bench)} models")
             story += [P(f"Observations: the ResNet-50 teacher needs {fmt(t.ort_lat_ms_1t)} ms per image on one CPU "
                         f"thread and {fmt(t.onnx_MB, 1)} MB; the fastest distilled student ({fastest.model}) needs "
                         f"{fmt(fastest.ort_lat_ms_1t)} ms ({t.ort_lat_ms_1t / fastest.ort_lat_ms_1t:.1f}x faster) and "
-                        f"{fmt(fastest.onnx_MB, 1)} MB. ONNX Runtime is consistently faster than PyTorch eager on the CPU, "
-                        "and the ONNX accuracy matches the PyTorch accuracy (tiny differences come from floating-point "
-                        "summation order), confirming correct export.")]
+                        f"{fmt(fastest.onnx_MB, 1)} MB. {ort_txt}. The largest top-1 difference between the PyTorch and "
+                        f"ONNX Runtime evaluations is {max_acc_gap:.2f} points (floating-point summation order), "
+                        "confirming a correct export.")]
 
     # ------------------------------------------------------------------ 5 screenshots
     shots = [("console_teacher.png", "Teacher training (last epochs)"),
@@ -407,7 +422,49 @@ def build(args):
         story += fig(f, 17, f"Screenshot {i + 1} - {cap}.")
 
     # ------------------------------------------------------------------ 6 conclusion
-    story += [P("6. Discussion and conclusions", H1)] + bullets([
+    story += [P("6. Discussion and conclusions", H1)]
+    findings = []
+    if comp is not None:
+        gains = ", ".join(f"{NICE[r.student]} {r.kd_gain_top1:+.2f}" for r in comp.itertuples())
+        findings.append(f"<b>Distillation helps every student</b> (top-1 gain over the identical baseline: {gains} "
+                        "points). The gain is consistent over the whole training run (Figure 3), not a lucky last epoch.")
+        above = comp[comp.kd_top1 > comp.teacher_top1]
+        if len(above):
+            r = above.iloc[0]
+            tr = f" (its final training accuracy is {th.train_acc.iloc[-1]:.1f}%)" if th is not None else ""
+            findings.append(
+                f"<b>A student surpassed its teacher</b>: the distilled {NICE[r.student]} reaches {fmt(r.kd_top1)}% vs. "
+                f"{fmt(r.teacher_top1)}% for ResNet-50 with {r.compression_vs_teacher}x fewer parameters. The teacher "
+                f"almost memorises the training set{tr}, whereas its soft targets give the student an "
+                "instance-specific label smoothing (similar classes receive probability mass), which regularises the "
+                "student; the same effect is reported for born-again networks (Furlanello et al., 2018).")
+        if abl is not None and (comp.student == "mobilenetv2").any():
+            r = comp[comp.student == "mobilenetv2"].iloc[0]
+            a = float(abl.test_top1.iloc[-1])
+            findings.append(
+                f"<b>Ablation (MobileNetV2)</b>: soft targets alone give {a - r.baseline_top1:+.2f} points over the "
+                f"baseline; adding the feature hints changes this by a further {r.kd_top1 - a:+.2f} points "
+                f"({fmt(a)}% -> {fmt(r.kd_top1)}%), so most of the benefit comes from the "
+                + ("logit-level dark knowledge." if abs(a - r.baseline_top1) >= abs(r.kd_top1 - a) else
+                   "intermediate feature hints."))
+    nas_pattern = ""
+    if hist is not None:
+        h = pd.DataFrame(hist)
+        top10 = h[h.status == "accepted"].sort_values("score", ascending=False).head(10)
+        n32 = int(top10.arch.str.startswith("r32").sum())
+        nds = int(top10.arch.str.split("|").str[1].str.strip().str.startswith("ds").sum())
+        n3 = int((top10.arch.str.count(r"\|") == 4).sum())
+        nas_pattern = (f" Among the {len(top10)} best-scoring candidates, {n32} keep the full 32x32 input, {nds} start "
+                       f"with a depthwise-separable stage and {n3} use only 3 stages: under a tight CPU budget the search "
+                       "spends its compute on resolution and cheap wide-kernel depthwise convolutions rather than on "
+                       "extra stages.")
+    if best is not None and "nas_best" in b:
+        nb = b["nas_best"]
+        findings.append(
+            f"<b>NAS</b>: the selected network reaches {fmt(nb.top1_torch)}% on CIFAR-10 with only "
+            f"{nb.params_M * 1e3:.0f} k parameters, {fmt(nb.onnx_MB, 2)} MB and {fmt(nb.ort_lat_ms_1t, 2)} ms per image "
+            "on one CPU thread, inside all deployment constraints." + nas_pattern)
+    story += bullets(findings + [
         "A complete distillation framework was built: temperature-scaled soft targets, combined hard/soft loss and "
         "feature-based hints on two intermediate representations, with a strictly comparable baseline pipeline.",
         "Feature alignment needs care: teacher and student feature maps differ in channels, resolution and scale, which is "

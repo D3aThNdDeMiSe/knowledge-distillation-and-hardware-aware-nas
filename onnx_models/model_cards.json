@@ -1,0 +1,97 @@
+{
+  "teacher_resnet50": {
+    "dataset": "cifar100",
+    "resolution": 32,
+    "num_classes": 100,
+    "arch": "resnet50",
+    "config": null,
+    "pytorch_top1": 78.12
+  },
+  "baseline_mobilenetv2": {
+    "dataset": "cifar100",
+    "resolution": 32,
+    "num_classes": 100,
+    "arch": "mobilenetv2",
+    "config": null,
+    "pytorch_top1": 74.56
+  },
+  "baseline_squeezenet": {
+    "dataset": "cifar100",
+    "resolution": 32,
+    "num_classes": 100,
+    "arch": "squeezenet",
+    "config": null,
+    "pytorch_top1": 71.61
+  },
+  "baseline_efficientnet_lite0": {
+    "dataset": "cifar100",
+    "resolution": 32,
+    "num_classes": 100,
+    "arch": "efficientnet_lite0",
+    "config": null,
+    "pytorch_top1": 75.48
+  },
+  "kd_mobilenetv2": {
+    "dataset": "cifar100",
+    "resolution": 32,
+    "num_classes": 100,
+    "arch": "mobilenetv2",
+    "config": null,
+    "pytorch_top1": 77.76
+  },
+  "kd_squeezenet": {
+    "dataset": "cifar100",
+    "resolution": 32,
+    "num_classes": 100,
+    "arch": "squeezenet",
+    "config": null,
+    "pytorch_top1": 74.07
+  },
+  "kd_efficientnet_lite0": {
+    "dataset": "cifar100",
+    "resolution": 32,
+    "num_classes": 100,
+    "arch": "efficientnet_lite0",
+    "config": null,
+    "pytorch_top1": 78.48
+  },
+  "nas_best": {
+    "dataset": "cifar10",
+    "resolution": 32,
+    "num_classes": 10,
+    "arch": "nas",
+    "config": {
+      "resolution": 32,
+      "stem_channels": 32,
+      "num_stages": 3,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 3,
+          "channels": 32,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "relu6"
+        },
+        {
+          "depth": 1,
+          "channels": 64,
+          "kernel": 5,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 3,
+          "channels": 64,
+          "kernel": 7,
+          "block": "mbconv",
+          "expansion": 4,
+          "activation": "hswish"
+        }
+      ]
+    },
+    "pytorch_top1": 93.06
+  }
+}

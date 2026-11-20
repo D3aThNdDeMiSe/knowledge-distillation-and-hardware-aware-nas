@@ -105,20 +105,36 @@ def fig_acc_latency():
     b = _csv("benchmark.csv")
     if b is None:
         return
-    q1 = b[b.dataset == "cifar100"]
-    fig, ax = plt.subplots(figsize=(6, 3.4))
-    colors = {"teacher": C_T, "baseline": C_BASE, "kd": C_KD}
-    for _, r in q1.iterrows():
-        ax.scatter(r.ort_lat_ms_1t, r.top1_onnx, s=30 + 25 * r.params_M ** 0.5 * 4,
-                   color=colors[r.group], alpha=0.85, edgecolor="k", lw=0.5)
-        ax.annotate(r.model.replace("baseline_", "base/").replace("kd_", "kd/").replace("teacher_", ""),
-                    (r.ort_lat_ms_1t, r.top1_onnx), fontsize=7, xytext=(4, 3), textcoords="offset points")
+    from matplotlib.ticker import FixedLocator, NullFormatter, ScalarFormatter
+    q1 = b[b.dataset == "cifar100"].set_index("model")
+    nice = {"mobilenetv2": "MobileNetV2", "squeezenet": "SqueezeNet", "efficientnet_lite0": "EfficientNet-Lite0"}
+    fig, ax = plt.subplots(figsize=(6.4, 3.6))
+    size = lambda m: 20 + 60 * q1.loc[m, "params_M"] ** 0.5
+    for s, name in nice.items():
+        bm, km = q1.loc[f"baseline_{s}"], q1.loc[f"kd_{s}"]
+        ax.annotate("", xy=(km.ort_lat_ms_1t, km.top1_onnx), xytext=(bm.ort_lat_ms_1t, bm.top1_onnx),
+                    arrowprops=dict(arrowstyle="->", color="0.45", lw=1, shrinkA=5, shrinkB=6))
+        ax.scatter(bm.ort_lat_ms_1t, bm.top1_onnx, s=size(f"baseline_{s}"), color=C_BASE, edgecolor="k", lw=0.5, zorder=3)
+        ax.scatter(km.ort_lat_ms_1t, km.top1_onnx, s=size(f"kd_{s}"), color=C_KD, edgecolor="k", lw=0.5, zorder=3)
+        ax.annotate(f"{name}\n{bm.top1_onnx:.1f} -> {km.top1_onnx:.1f}",
+                    ((bm.ort_lat_ms_1t + km.ort_lat_ms_1t) / 2, (bm.top1_onnx + km.top1_onnx) / 2),
+                    xytext=(-10, 0) if s == "mobilenetv2" else (10, -4), textcoords="offset points", fontsize=7,
+                    va="center", ha="right" if s == "mobilenetv2" else "left")
+    t = q1.loc["teacher_resnet50"]
+    ax.scatter(t.ort_lat_ms_1t, t.top1_onnx, s=size("teacher_resnet50"), color=C_T, edgecolor="k", lw=0.5, zorder=3)
+    ax.annotate(f"ResNet-50 teacher\n{t.top1_onnx:.1f}%, {t.ort_lat_ms_1t:.1f} ms", (t.ort_lat_ms_1t, t.top1_onnx),
+                xytext=(-12, -16), textcoords="offset points", fontsize=7, ha="right", va="top")
+    ax.axhline(t.top1_onnx, color=C_T, ls=":", lw=0.8)
     ax.set_xscale("log")
-    ax.set(xlabel="ONNX Runtime CPU latency, batch 1, 1 thread (ms, log)",
-           ylabel="CIFAR-100 top-1 (ONNX, %)", title="Accuracy vs. CPU latency (marker size ~ params)")
-    for g, c in colors.items():
-        ax.scatter([], [], color=c, label=g)
-    ax.legend(fontsize=7)
+    ax.xaxis.set_major_locator(FixedLocator([2, 3, 5, 10, 20, 50]))
+    ax.xaxis.set_major_formatter(ScalarFormatter())
+    ax.xaxis.set_minor_formatter(NullFormatter())
+    ax.set_xlim(2, 70)
+    ax.set(xlabel="ONNX Runtime CPU latency, batch 1, 1 thread (ms, log scale)",
+           ylabel="CIFAR-100 top-1 (ONNX, %)", title="Accuracy vs. CPU latency (arrow: baseline -> distilled)")
+    for lab, c in [("baseline", C_BASE), ("distilled (KD)", C_KD), ("teacher", C_T)]:
+        ax.scatter([], [], color=c, edgecolor="k", lw=0.5, label=lab)
+    ax.legend(fontsize=7, loc="lower right")
     save(fig, "q1_accuracy_vs_latency.png")
 
 
