@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Full Question-1 pipeline: teacher -> 3 baselines -> 3 distilled students.
 # Usage:  bash run_q1.sh            (PY env var can override the python interpreter)
-set -e
+set -eo pipefail
 PY=${PY:-python}
 cd "$(dirname "$0")"
 mkdir -p logs
