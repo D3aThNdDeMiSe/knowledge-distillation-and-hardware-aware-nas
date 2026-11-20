@@ -1,0 +1,62 @@
+{
+  "best_trial": 49,
+  "architecture": "r32 stem32 | ds-k5-relu6 x3 c32 | conv-k5-hswish x1 c64 | mb4-k7-hswish x3 c64 | head0",
+  "config": {
+    "resolution": 32,
+    "stem_channels": 32,
+    "num_stages": 3,
+    "head_channels": 0,
+    "stages": [
+      {
+        "depth": 3,
+        "channels": 32,
+        "kernel": 5,
+        "block": "dsconv",
+        "expansion": 1,
+        "activation": "relu6"
+      },
+      {
+        "depth": 1,
+        "channels": 64,
+        "kernel": 5,
+        "block": "conv",
+        "expansion": 1,
+        "activation": "hswish"
+      },
+      {
+        "depth": 3,
+        "channels": 64,
+        "kernel": 7,
+        "block": "mbconv",
+        "expansion": 4,
+        "activation": "hswish"
+      }
+    ]
+  },
+  "metrics": {
+    "val_acc": 85.48,
+    "score": 89.3323,
+    "params": 198154,
+    "onnx_size_mb": 0.755,
+    "state_dict_size_mb": 0.8044,
+    "latency_ms": 1.09,
+    "latency_p95_ms": 2.1846,
+    "torch_latency_ms": 3.2951,
+    "peak_memory_mb": 11.5
+  },
+  "constraints": {
+    "max_latency_ms": 2.0,
+    "max_size_mb": 1.5,
+    "max_memory_mb": 16.0
+  },
+  "latency_threads": 1,
+  "search": {
+    "strategy": "Optuna TPE (Bayesian optimisation)",
+    "trials": 50,
+    "accepted": 35,
+    "rejected": 15,
+    "epochs_per_candidate": 8,
+    "search_time_min": 23.2,
+    "score": "val_acc * (lat/2.0)^-0.05 * (size/1.5)^-0.02"
+  }
+}

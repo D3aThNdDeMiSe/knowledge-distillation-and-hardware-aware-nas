@@ -1,0 +1,2646 @@
+[
+  {
+    "trial": 0,
+    "status": "rejected",
+    "reject_reason": "size 1.74>1.5MB",
+    "arch": "r28 stem32 | mb4-k5-relu x3 c16 | conv-k5-relu6 x2 c48 | mb4-k5-hswish x3 c96 | mb4-k7-relu x1 c256 | head0",
+    "params": 457802,
+    "onnx_size_mb": 1.7352,
+    "state_dict_size_mb": 1.8226,
+    "latency_ms": 1.8929,
+    "latency_p95_ms": 2.1806,
+    "torch_latency_ms": 5.2297,
+    "peak_memory_mb": 13.4766,
+    "process_peak_mb": 66.3945,
+    "val_acc": null,
+    "score": null,
+    "profile_time_s": 3.22,
+    "train_time_s": null,
+    "config": {
+      "resolution": 28,
+      "stem_channels": 32,
+      "num_stages": 4,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 3,
+          "channels": 16,
+          "kernel": 5,
+          "block": "mbconv",
+          "expansion": 4,
+          "activation": "relu"
+        },
+        {
+          "depth": 2,
+          "channels": 48,
+          "kernel": 5,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "relu6"
+        },
+        {
+          "depth": 3,
+          "channels": 96,
+          "kernel": 5,
+          "block": "mbconv",
+          "expansion": 4,
+          "activation": "hswish"
+        },
+        {
+          "depth": 1,
+          "channels": 256,
+          "kernel": 7,
+          "block": "mbconv",
+          "expansion": 4,
+          "activation": "relu"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 1,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r28 stem32 | ds-k3-hswish x2 c24 | mb4-k5-silu x1 c96 | ds-k5-relu x2 c96 | head512",
+    "params": 96786,
+    "onnx_size_mb": 0.3698,
+    "state_dict_size_mb": 0.4043,
+    "latency_ms": 0.7175,
+    "latency_p95_ms": 0.9188,
+    "torch_latency_ms": 2.8276,
+    "peak_memory_mb": 11.1055,
+    "process_peak_mb": 64.6562,
+    "val_acc": 79.68,
+    "score": 86.2525,
+    "profile_time_s": 1.46,
+    "train_time_s": 44.3,
+    "config": {
+      "resolution": 28,
+      "stem_channels": 32,
+      "num_stages": 3,
+      "head_channels": 512,
+      "stages": [
+        {
+          "depth": 2,
+          "channels": 24,
+          "kernel": 3,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 1,
+          "channels": 96,
+          "kernel": 5,
+          "block": "mbconv",
+          "expansion": 4,
+          "activation": "silu"
+        },
+        {
+          "depth": 2,
+          "channels": 96,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "relu"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 2,
+    "status": "rejected",
+    "reject_reason": "size 1.60>1.5MB",
+    "arch": "r32 stem16 | conv-k3-relu x2 c16 | conv-k7-relu x1 c48 | ds-k7-relu6 x1 c128 | conv-k3-relu x2 c128 | head512",
+    "params": 418826,
+    "onnx_size_mb": 1.5986,
+    "state_dict_size_mb": 1.6234,
+    "latency_ms": 0.7218,
+    "latency_p95_ms": 0.8329,
+    "torch_latency_ms": 2.2964,
+    "peak_memory_mb": 12.2227,
+    "process_peak_mb": 65.5547,
+    "val_acc": null,
+    "score": null,
+    "profile_time_s": 1.55,
+    "train_time_s": null,
+    "config": {
+      "resolution": 32,
+      "stem_channels": 16,
+      "num_stages": 4,
+      "head_channels": 512,
+      "stages": [
+        {
+          "depth": 2,
+          "channels": 16,
+          "kernel": 3,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "relu"
+        },
+        {
+          "depth": 1,
+          "channels": 48,
+          "kernel": 7,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "relu"
+        },
+        {
+          "depth": 1,
+          "channels": 128,
+          "kernel": 7,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "relu6"
+        },
+        {
+          "depth": 2,
+          "channels": 128,
+          "kernel": 3,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "relu"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 3,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r24 stem32 | ds-k5-hswish x1 c32 | conv-k3-relu x1 c48 | mb4-k7-relu6 x2 c64 | ds-k5-relu x1 c160 | head0",
+    "params": 108970,
+    "onnx_size_mb": 0.4167,
+    "state_dict_size_mb": 0.4499,
+    "latency_ms": 0.4582,
+    "latency_p95_ms": 0.6295,
+    "torch_latency_ms": 2.0794,
+    "peak_memory_mb": 10.5234,
+    "process_peak_mb": 63.7891,
+    "val_acc": 78.5,
+    "score": 86.6951,
+    "profile_time_s": 1.46,
+    "train_time_s": 35.3,
+    "config": {
+      "resolution": 24,
+      "stem_channels": 32,
+      "num_stages": 4,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 1,
+          "channels": 32,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 1,
+          "channels": 48,
+          "kernel": 3,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "relu"
+        },
+        {
+          "depth": 2,
+          "channels": 64,
+          "kernel": 7,
+          "block": "mbconv",
+          "expansion": 4,
+          "activation": "relu6"
+        },
+        {
+          "depth": 1,
+          "channels": 160,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "relu"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 4,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r24 stem24 | mb4-k3-silu x1 c16 | ds-k3-relu6 x2 c96 | mb4-k7-hswish x1 c96 | head256",
+    "params": 140114,
+    "onnx_size_mb": 0.5339,
+    "state_dict_size_mb": 0.5707,
+    "latency_ms": 0.8721,
+    "latency_p95_ms": 1.1808,
+    "torch_latency_ms": 2.3178,
+    "peak_memory_mb": 11.2656,
+    "process_peak_mb": 64.5703,
+    "val_acc": 77.98,
+    "score": 82.981,
+    "profile_time_s": 1.57,
+    "train_time_s": 43.0,
+    "config": {
+      "resolution": 24,
+      "stem_channels": 24,
+      "num_stages": 3,
+      "head_channels": 256,
+      "stages": [
+        {
+          "depth": 1,
+          "channels": 16,
+          "kernel": 3,
+          "block": "mbconv",
+          "expansion": 4,
+          "activation": "silu"
+        },
+        {
+          "depth": 2,
+          "channels": 96,
+          "kernel": 3,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "relu6"
+        },
+        {
+          "depth": 1,
+          "channels": 96,
+          "kernel": 7,
+          "block": "mbconv",
+          "expansion": 4,
+          "activation": "hswish"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 5,
+    "status": "rejected",
+    "reject_reason": "latency 5.80>2.0ms; size 11.91>1.5MB; memory 22.8>16.0MB",
+    "arch": "r24 stem16 | mb4-k7-hswish x3 c24 | mb2-k3-hswish x3 c64 | conv-k7-relu6 x3 c160 | head256",
+    "params": 3122842,
+    "onnx_size_mb": 11.9138,
+    "state_dict_size_mb": 11.9728,
+    "latency_ms": 5.8035,
+    "latency_p95_ms": 7.5705,
+    "torch_latency_ms": 11.993,
+    "peak_memory_mb": 22.7656,
+    "process_peak_mb": 96.9961,
+    "val_acc": null,
+    "score": null,
+    "profile_time_s": 3.19,
+    "train_time_s": null,
+    "config": {
+      "resolution": 24,
+      "stem_channels": 16,
+      "num_stages": 3,
+      "head_channels": 256,
+      "stages": [
+        {
+          "depth": 3,
+          "channels": 24,
+          "kernel": 7,
+          "block": "mbconv",
+          "expansion": 4,
+          "activation": "hswish"
+        },
+        {
+          "depth": 3,
+          "channels": 64,
+          "kernel": 3,
+          "block": "mbconv",
+          "expansion": 2,
+          "activation": "hswish"
+        },
+        {
+          "depth": 3,
+          "channels": 160,
+          "kernel": 7,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "relu6"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 6,
+    "status": "rejected",
+    "reject_reason": "latency 2.19>2.0ms; size 1.70>1.5MB",
+    "arch": "r28 stem24 | mb6-k3-relu6 x2 c24 | mb4-k3-hswish x2 c64 | mb4-k5-hswish x3 c128 | head256",
+    "params": 449442,
+    "onnx_size_mb": 1.6983,
+    "state_dict_size_mb": 1.7943,
+    "latency_ms": 2.1937,
+    "latency_p95_ms": 2.759,
+    "torch_latency_ms": 4.9218,
+    "peak_memory_mb": 12.6406,
+    "process_peak_mb": 66.0156,
+    "val_acc": null,
+    "score": null,
+    "profile_time_s": 2.14,
+    "train_time_s": null,
+    "config": {
+      "resolution": 28,
+      "stem_channels": 24,
+      "num_stages": 3,
+      "head_channels": 256,
+      "stages": [
+        {
+          "depth": 2,
+          "channels": 24,
+          "kernel": 3,
+          "block": "mbconv",
+          "expansion": 6,
+          "activation": "relu6"
+        },
+        {
+          "depth": 2,
+          "channels": 64,
+          "kernel": 3,
+          "block": "mbconv",
+          "expansion": 4,
+          "activation": "hswish"
+        },
+        {
+          "depth": 3,
+          "channels": 128,
+          "kernel": 5,
+          "block": "mbconv",
+          "expansion": 4,
+          "activation": "hswish"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 7,
+    "status": "rejected",
+    "reject_reason": "latency 5.01>2.0ms",
+    "arch": "r32 stem32 | conv-k7-hswish x3 c24 | ds-k3-relu x3 c96 | ds-k5-relu x1 c128 | head0",
+    "params": 135266,
+    "onnx_size_mb": 0.5183,
+    "state_dict_size_mb": 0.5456,
+    "latency_ms": 5.0086,
+    "latency_p95_ms": 5.77,
+    "torch_latency_ms": 6.5758,
+    "peak_memory_mb": 11.2188,
+    "process_peak_mb": 64.5898,
+    "val_acc": null,
+    "score": null,
+    "profile_time_s": 2.44,
+    "train_time_s": null,
+    "config": {
+      "resolution": 32,
+      "stem_channels": 32,
+      "num_stages": 3,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 3,
+          "channels": 24,
+          "kernel": 7,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 3,
+          "channels": 96,
+          "kernel": 3,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "relu"
+        },
+        {
+          "depth": 1,
+          "channels": 128,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "relu"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 8,
+    "status": "rejected",
+    "reject_reason": "latency 2.56>2.0ms; size 4.70>1.5MB",
+    "arch": "r28 stem32 | ds-k3-relu6 x3 c32 | ds-k7-relu x3 c64 | conv-k7-relu6 x3 c96 | head0",
+    "params": 1229802,
+    "onnx_size_mb": 4.6999,
+    "state_dict_size_mb": 4.7292,
+    "latency_ms": 2.5556,
+    "latency_p95_ms": 3.3277,
+    "torch_latency_ms": 6.5855,
+    "peak_memory_mb": 14.6992,
+    "process_peak_mb": 73.1875,
+    "val_acc": null,
+    "score": null,
+    "profile_time_s": 2.24,
+    "train_time_s": null,
+    "config": {
+      "resolution": 28,
+      "stem_channels": 32,
+      "num_stages": 3,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 3,
+          "channels": 32,
+          "kernel": 3,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "relu6"
+        },
+        {
+          "depth": 3,
+          "channels": 64,
+          "kernel": 7,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "relu"
+        },
+        {
+          "depth": 3,
+          "channels": 96,
+          "kernel": 7,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "relu6"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 9,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r28 stem16 | conv-k7-relu x1 c32 | ds-k3-hswish x1 c48 | conv-k3-silu x2 c160 | head256",
+    "params": 371802,
+    "onnx_size_mb": 1.4194,
+    "state_dict_size_mb": 1.4377,
+    "latency_ms": 1.1802,
+    "latency_p95_ms": 1.4513,
+    "torch_latency_ms": 2.3724,
+    "peak_memory_mb": 11.3047,
+    "process_peak_mb": 65.3164,
+    "val_acc": 74.08,
+    "score": 76.1438,
+    "profile_time_s": 1.61,
+    "train_time_s": 27.2,
+    "config": {
+      "resolution": 28,
+      "stem_channels": 16,
+      "num_stages": 3,
+      "head_channels": 256,
+      "stages": [
+        {
+          "depth": 1,
+          "channels": 32,
+          "kernel": 7,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "relu"
+        },
+        {
+          "depth": 1,
+          "channels": 48,
+          "kernel": 3,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 2,
+          "channels": 160,
+          "kernel": 3,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "silu"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 10,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r24 stem32 | ds-k5-hswish x3 c32 | conv-k3-relu6 x1 c48 | mb6-k7-relu6 x2 c64 | head0",
+    "params": 138634,
+    "onnx_size_mb": 0.5293,
+    "state_dict_size_mb": 0.5696,
+    "latency_ms": 0.7515,
+    "latency_p95_ms": 0.9913,
+    "torch_latency_ms": 2.2759,
+    "peak_memory_mb": 10.6055,
+    "process_peak_mb": 63.9688,
+    "val_acc": 81.46,
+    "score": 87.3465,
+    "profile_time_s": 1.65,
+    "train_time_s": 42.7,
+    "config": {
+      "resolution": 24,
+      "stem_channels": 32,
+      "num_stages": 3,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 3,
+          "channels": 32,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 1,
+          "channels": 48,
+          "kernel": 3,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "relu6"
+        },
+        {
+          "depth": 2,
+          "channels": 64,
+          "kernel": 7,
+          "block": "mbconv",
+          "expansion": 6,
+          "activation": "relu6"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 11,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r24 stem32 | ds-k5-relu x3 c32 | conv-k3-relu x1 c48 | mb6-k7-relu6 x1 c64 | head0",
+    "params": 69002,
+    "onnx_size_mb": 0.2655,
+    "state_dict_size_mb": 0.292,
+    "latency_ms": 0.3964,
+    "latency_p95_ms": 0.4672,
+    "torch_latency_ms": 2.4895,
+    "peak_memory_mb": 10.0586,
+    "process_peak_mb": 63.2422,
+    "val_acc": 75.94,
+    "score": 85.2421,
+    "profile_time_s": 1.5,
+    "train_time_s": 32.8,
+    "config": {
+      "resolution": 24,
+      "stem_channels": 32,
+      "num_stages": 3,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 3,
+          "channels": 32,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "relu"
+        },
+        {
+          "depth": 1,
+          "channels": 48,
+          "kernel": 3,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "relu"
+        },
+        {
+          "depth": 1,
+          "channels": 64,
+          "kernel": 7,
+          "block": "mbconv",
+          "expansion": 6,
+          "activation": "relu6"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 12,
+    "status": "rejected",
+    "reject_reason": "size 1.56>1.5MB",
+    "arch": "r24 stem32 | ds-k5-hswish x1 c32 | mb6-k3-relu x3 c48 | mb6-k7-relu x2 c128 | ds-k5-relu x1 c160 | head0",
+    "params": 413450,
+    "onnx_size_mb": 1.5609,
+    "state_dict_size_mb": 1.6498,
+    "latency_ms": 1.1043,
+    "latency_p95_ms": 1.2727,
+    "torch_latency_ms": 4.3204,
+    "peak_memory_mb": 12.8047,
+    "process_peak_mb": 66.2539,
+    "val_acc": null,
+    "score": null,
+    "profile_time_s": 1.8,
+    "train_time_s": null,
+    "config": {
+      "resolution": 24,
+      "stem_channels": 32,
+      "num_stages": 4,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 1,
+          "channels": 32,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 3,
+          "channels": 48,
+          "kernel": 3,
+          "block": "mbconv",
+          "expansion": 6,
+          "activation": "relu"
+        },
+        {
+          "depth": 2,
+          "channels": 128,
+          "kernel": 7,
+          "block": "mbconv",
+          "expansion": 6,
+          "activation": "relu"
+        },
+        {
+          "depth": 1,
+          "channels": 160,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "relu"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 13,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r24 stem16 | ds-k5-hswish x3 c32 | ds-k3-relu6 x1 c48 | mb2-k5-relu6 x2 c160 | head0",
+    "params": 144042,
+    "onnx_size_mb": 0.5528,
+    "state_dict_size_mb": 0.5897,
+    "latency_ms": 0.6228,
+    "latency_p95_ms": 0.7467,
+    "torch_latency_ms": 2.2993,
+    "peak_memory_mb": 11.3438,
+    "process_peak_mb": 64.7305,
+    "val_acc": 77.82,
+    "score": 84.158,
+    "profile_time_s": 1.45,
+    "train_time_s": 37.0,
+    "config": {
+      "resolution": 24,
+      "stem_channels": 16,
+      "num_stages": 3,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 3,
+          "channels": 32,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 1,
+          "channels": 48,
+          "kernel": 3,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "relu6"
+        },
+        {
+          "depth": 2,
+          "channels": 160,
+          "kernel": 5,
+          "block": "mbconv",
+          "expansion": 2,
+          "activation": "relu6"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 14,
+    "status": "rejected",
+    "reject_reason": "size 6.61>1.5MB; memory 17.2>16.0MB",
+    "arch": "r24 stem32 | ds-k5-hswish x3 c32 | ds-k3-relu6 x2 c64 | mb6-k7-silu x2 c64 | conv-k5-hswish x3 c160 | head256",
+    "params": 1734506,
+    "onnx_size_mb": 6.6139,
+    "state_dict_size_mb": 6.679,
+    "latency_ms": 1.4935,
+    "latency_p95_ms": 2.3884,
+    "torch_latency_ms": 6.1306,
+    "peak_memory_mb": 17.2031,
+    "process_peak_mb": 79.6094,
+    "val_acc": null,
+    "score": null,
+    "profile_time_s": 2.1,
+    "train_time_s": null,
+    "config": {
+      "resolution": 24,
+      "stem_channels": 32,
+      "num_stages": 4,
+      "head_channels": 256,
+      "stages": [
+        {
+          "depth": 3,
+          "channels": 32,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 2,
+          "channels": 64,
+          "kernel": 3,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "relu6"
+        },
+        {
+          "depth": 2,
+          "channels": 64,
+          "kernel": 7,
+          "block": "mbconv",
+          "expansion": 6,
+          "activation": "silu"
+        },
+        {
+          "depth": 3,
+          "channels": 160,
+          "kernel": 5,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "hswish"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 15,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r24 stem32 | ds-k3-hswish x1 c32 | ds-k3-relu x1 c48 | mb2-k3-relu6 x2 c64 | ds-k5-relu6 x2 c256 | head0",
+    "params": 128810,
+    "onnx_size_mb": 0.4941,
+    "state_dict_size_mb": 0.5329,
+    "latency_ms": 0.2602,
+    "latency_p95_ms": 0.3686,
+    "torch_latency_ms": 2.5643,
+    "peak_memory_mb": 10.5234,
+    "process_peak_mb": 63.9102,
+    "val_acc": 74.42,
+    "score": 84.2608,
+    "profile_time_s": 1.5,
+    "train_time_s": 23.9,
+    "config": {
+      "resolution": 24,
+      "stem_channels": 32,
+      "num_stages": 4,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 1,
+          "channels": 32,
+          "kernel": 3,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 1,
+          "channels": 48,
+          "kernel": 3,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "relu"
+        },
+        {
+          "depth": 2,
+          "channels": 64,
+          "kernel": 3,
+          "block": "mbconv",
+          "expansion": 2,
+          "activation": "relu6"
+        },
+        {
+          "depth": 2,
+          "channels": 256,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "relu6"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 16,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r24 stem32 | conv-k5-hswish x1 c48 | conv-k3-relu6 x1 c48 | mb4-k7-relu6 x2 c64 | mb2-k3-relu6 x1 c160 | head256",
+    "params": 213226,
+    "onnx_size_mb": 0.813,
+    "state_dict_size_mb": 0.8526,
+    "latency_ms": 1.0364,
+    "latency_p95_ms": 1.1582,
+    "torch_latency_ms": 2.5657,
+    "peak_memory_mb": 11.5977,
+    "process_peak_mb": 65.0547,
+    "val_acc": 79.88,
+    "score": 83.5669,
+    "profile_time_s": 1.57,
+    "train_time_s": 31.9,
+    "config": {
+      "resolution": 24,
+      "stem_channels": 32,
+      "num_stages": 4,
+      "head_channels": 256,
+      "stages": [
+        {
+          "depth": 1,
+          "channels": 48,
+          "kernel": 5,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 1,
+          "channels": 48,
+          "kernel": 3,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "relu6"
+        },
+        {
+          "depth": 2,
+          "channels": 64,
+          "kernel": 7,
+          "block": "mbconv",
+          "expansion": 4,
+          "activation": "relu6"
+        },
+        {
+          "depth": 1,
+          "channels": 160,
+          "kernel": 3,
+          "block": "mbconv",
+          "expansion": 2,
+          "activation": "relu6"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 17,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r24 stem32 | ds-k7-relu6 x3 c24 | conv-k5-relu6 x1 c48 | mb6-k7-silu x2 c64 | head0",
+    "params": 153898,
+    "onnx_size_mb": 0.5898,
+    "state_dict_size_mb": 0.6268,
+    "latency_ms": 0.847,
+    "latency_p95_ms": 0.9859,
+    "torch_latency_ms": 2.5247,
+    "peak_memory_mb": 10.9492,
+    "process_peak_mb": 64.207,
+    "val_acc": 80.38,
+    "score": 85.4898,
+    "profile_time_s": 1.55,
+    "train_time_s": 47.3,
+    "config": {
+      "resolution": 24,
+      "stem_channels": 32,
+      "num_stages": 3,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 3,
+          "channels": 24,
+          "kernel": 7,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "relu6"
+        },
+        {
+          "depth": 1,
+          "channels": 48,
+          "kernel": 5,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "relu6"
+        },
+        {
+          "depth": 2,
+          "channels": 64,
+          "kernel": 7,
+          "block": "mbconv",
+          "expansion": 6,
+          "activation": "silu"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 18,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r24 stem32 | ds-k5-hswish x1 c16 | conv-k5-relu x1 c48 | mb4-k5-relu6 x2 c128 | head0",
+    "params": 208714,
+    "onnx_size_mb": 0.7935,
+    "state_dict_size_mb": 0.8296,
+    "latency_ms": 0.5944,
+    "latency_p95_ms": 0.7134,
+    "torch_latency_ms": 2.0892,
+    "peak_memory_mb": 11.4688,
+    "process_peak_mb": 64.9648,
+    "val_acc": 80.36,
+    "score": 86.481,
+    "profile_time_s": 1.45,
+    "train_time_s": 27.5,
+    "config": {
+      "resolution": 24,
+      "stem_channels": 32,
+      "num_stages": 3,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 1,
+          "channels": 16,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 1,
+          "channels": 48,
+          "kernel": 5,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "relu"
+        },
+        {
+          "depth": 2,
+          "channels": 128,
+          "kernel": 5,
+          "block": "mbconv",
+          "expansion": 4,
+          "activation": "relu6"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 19,
+    "status": "rejected",
+    "reject_reason": "size 1.81>1.5MB",
+    "arch": "r24 stem16 | mb2-k5-hswish x3 c24 | conv-k3-relu x1 c48 | mb6-k3-relu6 x3 c64 | conv-k5-silu x1 c192 | head0",
+    "params": 474858,
+    "onnx_size_mb": 1.808,
+    "state_dict_size_mb": 1.8737,
+    "latency_ms": 0.8572,
+    "latency_p95_ms": 1.1408,
+    "torch_latency_ms": 3.5177,
+    "peak_memory_mb": 12.1055,
+    "process_peak_mb": 66.3867,
+    "val_acc": null,
+    "score": null,
+    "profile_time_s": 1.74,
+    "train_time_s": null,
+    "config": {
+      "resolution": 24,
+      "stem_channels": 16,
+      "num_stages": 4,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 3,
+          "channels": 24,
+          "kernel": 5,
+          "block": "mbconv",
+          "expansion": 2,
+          "activation": "hswish"
+        },
+        {
+          "depth": 1,
+          "channels": 48,
+          "kernel": 3,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "relu"
+        },
+        {
+          "depth": 3,
+          "channels": 64,
+          "kernel": 3,
+          "block": "mbconv",
+          "expansion": 6,
+          "activation": "relu6"
+        },
+        {
+          "depth": 1,
+          "channels": 192,
+          "kernel": 5,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "silu"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 20,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r32 stem32 | ds-k3-hswish x3 c32 | conv-k5-silu x1 c48 | mb2-k5-relu6 x2 c64 | head0",
+    "params": 78282,
+    "onnx_size_mb": 0.304,
+    "state_dict_size_mb": 0.3325,
+    "latency_ms": 1.3343,
+    "latency_p95_ms": 1.4873,
+    "torch_latency_ms": 3.5729,
+    "peak_memory_mb": 10.6406,
+    "process_peak_mb": 64.0469,
+    "val_acc": 80.1,
+    "score": 84.3886,
+    "profile_time_s": 1.71,
+    "train_time_s": 34.6,
+    "config": {
+      "resolution": 32,
+      "stem_channels": 32,
+      "num_stages": 3,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 3,
+          "channels": 32,
+          "kernel": 3,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 1,
+          "channels": 48,
+          "kernel": 5,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "silu"
+        },
+        {
+          "depth": 2,
+          "channels": 64,
+          "kernel": 5,
+          "block": "mbconv",
+          "expansion": 2,
+          "activation": "relu6"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 21,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r32 stem16 | ds-k5-hswish x1 c16 | conv-k5-relu x1 c48 | mb4-k5-relu x2 c64 | head0",
+    "params": 88650,
+    "onnx_size_mb": 0.3376,
+    "state_dict_size_mb": 0.3665,
+    "latency_ms": 0.6059,
+    "latency_p95_ms": 0.7632,
+    "torch_latency_ms": 2.0333,
+    "peak_memory_mb": 10.1953,
+    "process_peak_mb": 63.125,
+    "val_acc": 80.86,
+    "score": 88.4337,
+    "profile_time_s": 1.4,
+    "train_time_s": 29.1,
+    "config": {
+      "resolution": 32,
+      "stem_channels": 16,
+      "num_stages": 3,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 1,
+          "channels": 16,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 1,
+          "channels": 48,
+          "kernel": 5,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "relu"
+        },
+        {
+          "depth": 2,
+          "channels": 64,
+          "kernel": 5,
+          "block": "mbconv",
+          "expansion": 4,
+          "activation": "relu"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 22,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r32 stem16 | ds-k3-hswish x2 c16 | conv-k5-relu x2 c48 | mb4-k5-relu x2 c64 | head0",
+    "params": 146554,
+    "onnx_size_mb": 0.5599,
+    "state_dict_size_mb": 0.5937,
+    "latency_ms": 1.1375,
+    "latency_p95_ms": 1.263,
+    "torch_latency_ms": 2.6219,
+    "peak_memory_mb": 10.8711,
+    "process_peak_mb": 64.2383,
+    "val_acc": 82.5,
+    "score": 86.5499,
+    "profile_time_s": 1.51,
+    "train_time_s": 27.6,
+    "config": {
+      "resolution": 32,
+      "stem_channels": 16,
+      "num_stages": 3,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 2,
+          "channels": 16,
+          "kernel": 3,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 2,
+          "channels": 48,
+          "kernel": 5,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "relu"
+        },
+        {
+          "depth": 2,
+          "channels": 64,
+          "kernel": 5,
+          "block": "mbconv",
+          "expansion": 4,
+          "activation": "relu"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 23,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r32 stem16 | ds-k5-hswish x1 c16 | conv-k5-relu x1 c32 | mb4-k5-hswish x2 c64 | head512",
+    "params": 109418,
+    "onnx_size_mb": 0.4161,
+    "state_dict_size_mb": 0.4502,
+    "latency_ms": 0.7256,
+    "latency_p95_ms": 0.8428,
+    "torch_latency_ms": 2.0419,
+    "peak_memory_mb": 10.5273,
+    "process_peak_mb": 64.0273,
+    "val_acc": 80.38,
+    "score": 86.7564,
+    "profile_time_s": 1.38,
+    "train_time_s": 22.5,
+    "config": {
+      "resolution": 32,
+      "stem_channels": 16,
+      "num_stages": 3,
+      "head_channels": 512,
+      "stages": [
+        {
+          "depth": 1,
+          "channels": 16,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 1,
+          "channels": 32,
+          "kernel": 5,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "relu"
+        },
+        {
+          "depth": 2,
+          "channels": 64,
+          "kernel": 5,
+          "block": "mbconv",
+          "expansion": 4,
+          "activation": "hswish"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 24,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r32 stem16 | ds-k5-hswish x1 c16 | conv-k5-relu x1 c32 | mb4-k5-hswish x2 c96 | head512",
+    "params": 174698,
+    "onnx_size_mb": 0.6633,
+    "state_dict_size_mb": 0.7017,
+    "latency_ms": 0.9934,
+    "latency_p95_ms": 1.223,
+    "torch_latency_ms": 2.168,
+    "peak_memory_mb": 11.5859,
+    "process_peak_mb": 65.0664,
+    "val_acc": 81.74,
+    "score": 86.0435,
+    "profile_time_s": 1.57,
+    "train_time_s": 25.7,
+    "config": {
+      "resolution": 32,
+      "stem_channels": 16,
+      "num_stages": 3,
+      "head_channels": 512,
+      "stages": [
+        {
+          "depth": 1,
+          "channels": 16,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 1,
+          "channels": 32,
+          "kernel": 5,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "relu"
+        },
+        {
+          "depth": 2,
+          "channels": 96,
+          "kernel": 5,
+          "block": "mbconv",
+          "expansion": 4,
+          "activation": "hswish"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 25,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r32 stem16 | ds-k5-relu x1 c16 | conv-k5-relu x1 c64 | ds-k3-relu x2 c64 | head0",
+    "params": 37418,
+    "onnx_size_mb": 0.1453,
+    "state_dict_size_mb": 0.1616,
+    "latency_ms": 0.3178,
+    "latency_p95_ms": 0.4125,
+    "torch_latency_ms": 1.6216,
+    "peak_memory_mb": 9.5938,
+    "process_peak_mb": 63.2109,
+    "val_acc": 70.66,
+    "score": 81.1708,
+    "profile_time_s": 1.32,
+    "train_time_s": 18.0,
+    "config": {
+      "resolution": 32,
+      "stem_channels": 16,
+      "num_stages": 3,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 1,
+          "channels": 16,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "relu"
+        },
+        {
+          "depth": 1,
+          "channels": 64,
+          "kernel": 5,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "relu"
+        },
+        {
+          "depth": 2,
+          "channels": 64,
+          "kernel": 3,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "relu"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 26,
+    "status": "rejected",
+    "reject_reason": "size 2.52>1.5MB",
+    "arch": "r32 stem32 | mb2-k5-hswish x1 c16 | conv-k5-relu x1 c32 | mb6-k5-relu x2 c64 | mb6-k3-hswish x2 c192 | head0",
+    "params": 666634,
+    "onnx_size_mb": 2.5217,
+    "state_dict_size_mb": 2.6138,
+    "latency_ms": 1.6151,
+    "latency_p95_ms": 1.9453,
+    "torch_latency_ms": 4.4111,
+    "peak_memory_mb": 13.0781,
+    "process_peak_mb": 66.9258,
+    "val_acc": null,
+    "score": null,
+    "profile_time_s": 1.92,
+    "train_time_s": null,
+    "config": {
+      "resolution": 32,
+      "stem_channels": 32,
+      "num_stages": 4,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 1,
+          "channels": 16,
+          "kernel": 5,
+          "block": "mbconv",
+          "expansion": 2,
+          "activation": "hswish"
+        },
+        {
+          "depth": 1,
+          "channels": 32,
+          "kernel": 5,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "relu"
+        },
+        {
+          "depth": 2,
+          "channels": 64,
+          "kernel": 5,
+          "block": "mbconv",
+          "expansion": 6,
+          "activation": "relu"
+        },
+        {
+          "depth": 2,
+          "channels": 192,
+          "kernel": 3,
+          "block": "mbconv",
+          "expansion": 6,
+          "activation": "hswish"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 27,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r32 stem16 | conv-k5-silu x1 c16 | ds-k5-relu x1 c48 | mb4-k5-silu x2 c64 | head0",
+    "params": 76362,
+    "onnx_size_mb": 0.292,
+    "state_dict_size_mb": 0.3196,
+    "latency_ms": 0.782,
+    "latency_p95_ms": 0.9123,
+    "torch_latency_ms": 2.4698,
+    "peak_memory_mb": 9.9766,
+    "process_peak_mb": 63.4531,
+    "val_acc": 79.46,
+    "score": 86.0503,
+    "profile_time_s": 1.48,
+    "train_time_s": 27.4,
+    "config": {
+      "resolution": 32,
+      "stem_channels": 16,
+      "num_stages": 3,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 1,
+          "channels": 16,
+          "kernel": 5,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "silu"
+        },
+        {
+          "depth": 1,
+          "channels": 48,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "relu"
+        },
+        {
+          "depth": 2,
+          "channels": 64,
+          "kernel": 5,
+          "block": "mbconv",
+          "expansion": 4,
+          "activation": "silu"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 28,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r32 stem16 | ds-k5-hswish x1 c16 | conv-k5-relu6 x1 c48 | mb4-k7-relu x2 c160 | head256",
+    "params": 353994,
+    "onnx_size_mb": 1.3441,
+    "state_dict_size_mb": 1.3897,
+    "latency_ms": 1.0319,
+    "latency_p95_ms": 1.1729,
+    "torch_latency_ms": 3.0544,
+    "peak_memory_mb": 12.1875,
+    "process_peak_mb": 65.3516,
+    "val_acc": 83.54,
+    "score": 86.5398,
+    "profile_time_s": 1.68,
+    "train_time_s": 39.0,
+    "config": {
+      "resolution": 32,
+      "stem_channels": 16,
+      "num_stages": 3,
+      "head_channels": 256,
+      "stages": [
+        {
+          "depth": 1,
+          "channels": 16,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 1,
+          "channels": 48,
+          "kernel": 5,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "relu6"
+        },
+        {
+          "depth": 2,
+          "channels": 160,
+          "kernel": 7,
+          "block": "mbconv",
+          "expansion": 4,
+          "activation": "relu"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 29,
+    "status": "rejected",
+    "reject_reason": "latency 2.23>2.0ms; size 7.43>1.5MB; memory 19.5>16.0MB",
+    "arch": "r32 stem16 | ds-k5-hswish x1 c16 | mb6-k5-hswish x1 c48 | conv-k5-relu x2 c64 | conv-k7-silu x2 c160 | head0",
+    "params": 1948074,
+    "onnx_size_mb": 7.4336,
+    "state_dict_size_mb": 7.4567,
+    "latency_ms": 2.2305,
+    "latency_p95_ms": 3.2571,
+    "torch_latency_ms": 6.4022,
+    "peak_memory_mb": 19.5195,
+    "process_peak_mb": 89.1797,
+    "val_acc": null,
+    "score": null,
+    "profile_time_s": 2.11,
+    "train_time_s": null,
+    "config": {
+      "resolution": 32,
+      "stem_channels": 16,
+      "num_stages": 4,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 1,
+          "channels": 16,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 1,
+          "channels": 48,
+          "kernel": 5,
+          "block": "mbconv",
+          "expansion": 6,
+          "activation": "hswish"
+        },
+        {
+          "depth": 2,
+          "channels": 64,
+          "kernel": 5,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "relu"
+        },
+        {
+          "depth": 2,
+          "channels": 160,
+          "kernel": 7,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "silu"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 30,
+    "status": "rejected",
+    "reject_reason": "latency 2.80>2.0ms",
+    "arch": "r28 stem16 | mb6-k5-hswish x1 c24 | conv-k7-relu x3 c48 | mb6-k5-hswish x2 c64 | head0",
+    "params": 391466,
+    "onnx_size_mb": 1.4902,
+    "state_dict_size_mb": 1.5327,
+    "latency_ms": 2.7983,
+    "latency_p95_ms": 3.5618,
+    "torch_latency_ms": 5.1545,
+    "peak_memory_mb": 12.625,
+    "process_peak_mb": 66.1992,
+    "val_acc": null,
+    "score": null,
+    "profile_time_s": 2.29,
+    "train_time_s": null,
+    "config": {
+      "resolution": 28,
+      "stem_channels": 16,
+      "num_stages": 3,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 1,
+          "channels": 24,
+          "kernel": 5,
+          "block": "mbconv",
+          "expansion": 6,
+          "activation": "hswish"
+        },
+        {
+          "depth": 3,
+          "channels": 48,
+          "kernel": 7,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "relu"
+        },
+        {
+          "depth": 2,
+          "channels": 64,
+          "kernel": 5,
+          "block": "mbconv",
+          "expansion": 6,
+          "activation": "hswish"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 31,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r24 stem24 | ds-k5-hswish x3 c48 | conv-k3-silu x1 c64 | mb4-k7-hswish x2 c64 | head0",
+    "params": 131338,
+    "onnx_size_mb": 0.4997,
+    "state_dict_size_mb": 0.5401,
+    "latency_ms": 1.0493,
+    "latency_p95_ms": 1.3661,
+    "torch_latency_ms": 3.7326,
+    "peak_memory_mb": 10.8594,
+    "process_peak_mb": 64.2305,
+    "val_acc": 80.94,
+    "score": 85.4512,
+    "profile_time_s": 1.75,
+    "train_time_s": 44.3,
+    "config": {
+      "resolution": 24,
+      "stem_channels": 24,
+      "num_stages": 3,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 3,
+          "channels": 48,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 1,
+          "channels": 64,
+          "kernel": 3,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "silu"
+        },
+        {
+          "depth": 2,
+          "channels": 64,
+          "kernel": 7,
+          "block": "mbconv",
+          "expansion": 4,
+          "activation": "hswish"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 32,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r32 stem32 | ds-k5-hswish x1 c32 | conv-k3-hswish x1 c48 | mb4-k7-relu6 x3 c64 | ds-k7-relu6 x1 c128 | head0",
+    "params": 154538,
+    "onnx_size_mb": 0.5897,
+    "state_dict_size_mb": 0.6336,
+    "latency_ms": 1.0291,
+    "latency_p95_ms": 1.3461,
+    "torch_latency_ms": 4.3368,
+    "peak_memory_mb": 10.9102,
+    "process_peak_mb": 64.3711,
+    "val_acc": 82.32,
+    "score": 86.705,
+    "profile_time_s": 1.92,
+    "train_time_s": 43.8,
+    "config": {
+      "resolution": 32,
+      "stem_channels": 32,
+      "num_stages": 4,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 1,
+          "channels": 32,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 1,
+          "channels": 48,
+          "kernel": 3,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 3,
+          "channels": 64,
+          "kernel": 7,
+          "block": "mbconv",
+          "expansion": 4,
+          "activation": "relu6"
+        },
+        {
+          "depth": 1,
+          "channels": 128,
+          "kernel": 7,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "relu6"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 33,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r32 stem32 | ds-k5-hswish x1 c32 | conv-k3-hswish x2 c48 | mb4-k5-relu x3 c64 | ds-k7-relu6 x1 c128 | head512",
+    "params": 228874,
+    "onnx_size_mb": 0.8696,
+    "state_dict_size_mb": 0.925,
+    "latency_ms": 1.1176,
+    "latency_p95_ms": 1.3384,
+    "torch_latency_ms": 3.4298,
+    "peak_memory_mb": 11.4375,
+    "process_peak_mb": 64.9102,
+    "val_acc": 83.18,
+    "score": 86.5748,
+    "profile_time_s": 1.82,
+    "train_time_s": 40.6,
+    "config": {
+      "resolution": 32,
+      "stem_channels": 32,
+      "num_stages": 4,
+      "head_channels": 512,
+      "stages": [
+        {
+          "depth": 1,
+          "channels": 32,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 2,
+          "channels": 48,
+          "kernel": 3,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 3,
+          "channels": 64,
+          "kernel": 5,
+          "block": "mbconv",
+          "expansion": 4,
+          "activation": "relu"
+        },
+        {
+          "depth": 1,
+          "channels": 128,
+          "kernel": 7,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "relu6"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 34,
+    "status": "rejected",
+    "reject_reason": "latency 2.26>2.0ms; size 8.21>1.5MB; memory 18.8>16.0MB",
+    "arch": "r32 stem24 | ds-k5-hswish x1 c32 | conv-k3-silu x3 c32 | mb4-k7-relu6 x3 c64 | conv-k7-relu6 x3 c128 | head0",
+    "params": 2151242,
+    "onnx_size_mb": 8.2079,
+    "state_dict_size_mb": 8.257,
+    "latency_ms": 2.2561,
+    "latency_p95_ms": 2.9122,
+    "torch_latency_ms": 7.5412,
+    "peak_memory_mb": 18.7617,
+    "process_peak_mb": 84.4727,
+    "val_acc": null,
+    "score": null,
+    "profile_time_s": 2.41,
+    "train_time_s": null,
+    "config": {
+      "resolution": 32,
+      "stem_channels": 24,
+      "num_stages": 4,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 1,
+          "channels": 32,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 3,
+          "channels": 32,
+          "kernel": 3,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "silu"
+        },
+        {
+          "depth": 3,
+          "channels": 64,
+          "kernel": 7,
+          "block": "mbconv",
+          "expansion": 4,
+          "activation": "relu6"
+        },
+        {
+          "depth": 3,
+          "channels": 128,
+          "kernel": 7,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "relu6"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 35,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r32 stem32 | ds-k5-hswish x1 c32 | conv-k3-hswish x1 c48 | mb2-k7-relu6 x3 c96 | head0",
+    "params": 131338,
+    "onnx_size_mb": 0.502,
+    "state_dict_size_mb": 0.537,
+    "latency_ms": 0.9765,
+    "latency_p95_ms": 1.2986,
+    "torch_latency_ms": 3.11,
+    "peak_memory_mb": 10.9492,
+    "process_peak_mb": 64.4844,
+    "val_acc": 82.14,
+    "score": 87.0221,
+    "profile_time_s": 1.69,
+    "train_time_s": 39.0,
+    "config": {
+      "resolution": 32,
+      "stem_channels": 32,
+      "num_stages": 3,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 1,
+          "channels": 32,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 1,
+          "channels": 48,
+          "kernel": 3,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 3,
+          "channels": 96,
+          "kernel": 7,
+          "block": "mbconv",
+          "expansion": 2,
+          "activation": "relu6"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 36,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r32 stem32 | conv-k5-relu x1 c32 | conv-k3-relu6 x1 c48 | mb2-k7-relu6 x3 c96 | head0",
+    "params": 155050,
+    "onnx_size_mb": 0.5924,
+    "state_dict_size_mb": 0.6253,
+    "latency_ms": 1.8781,
+    "latency_p95_ms": 2.6644,
+    "torch_latency_ms": 5.8355,
+    "peak_memory_mb": 10.8438,
+    "process_peak_mb": 64.3359,
+    "val_acc": 82.92,
+    "score": 84.7412,
+    "profile_time_s": 2.62,
+    "train_time_s": 42.6,
+    "config": {
+      "resolution": 32,
+      "stem_channels": 32,
+      "num_stages": 3,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 1,
+          "channels": 32,
+          "kernel": 5,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "relu"
+        },
+        {
+          "depth": 1,
+          "channels": 48,
+          "kernel": 3,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "relu6"
+        },
+        {
+          "depth": 3,
+          "channels": 96,
+          "kernel": 7,
+          "block": "mbconv",
+          "expansion": 2,
+          "activation": "relu6"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 37,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r24 stem32 | ds-k5-hswish x3 c32 | conv-k5-relu6 x3 c48 | mb2-k7-relu x2 c64 | head0",
+    "params": 200586,
+    "onnx_size_mb": 0.7704,
+    "state_dict_size_mb": 0.8035,
+    "latency_ms": 1.1688,
+    "latency_p95_ms": 1.4258,
+    "torch_latency_ms": 4.1817,
+    "peak_memory_mb": 11.5781,
+    "process_peak_mb": 65.2109,
+    "val_acc": 81.06,
+    "score": 84.3837,
+    "profile_time_s": 1.75,
+    "train_time_s": 38.1,
+    "config": {
+      "resolution": 24,
+      "stem_channels": 32,
+      "num_stages": 3,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 3,
+          "channels": 32,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 3,
+          "channels": 48,
+          "kernel": 5,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "relu6"
+        },
+        {
+          "depth": 2,
+          "channels": 64,
+          "kernel": 7,
+          "block": "mbconv",
+          "expansion": 2,
+          "activation": "relu"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 38,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r32 stem32 | ds-k5-silu x1 c32 | conv-k3-hswish x1 c48 | mb2-k3-hswish x3 c96 | head512",
+    "params": 166474,
+    "onnx_size_mb": 0.6325,
+    "state_dict_size_mb": 0.6767,
+    "latency_ms": 1.1029,
+    "latency_p95_ms": 1.4119,
+    "torch_latency_ms": 3.6074,
+    "peak_memory_mb": 11.3867,
+    "process_peak_mb": 64.5508,
+    "val_acc": 80.56,
+    "score": 84.4396,
+    "profile_time_s": 1.76,
+    "train_time_s": 29.8,
+    "config": {
+      "resolution": 32,
+      "stem_channels": 32,
+      "num_stages": 3,
+      "head_channels": 512,
+      "stages": [
+        {
+          "depth": 1,
+          "channels": 32,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "silu"
+        },
+        {
+          "depth": 1,
+          "channels": 48,
+          "kernel": 3,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 3,
+          "channels": 96,
+          "kernel": 3,
+          "block": "mbconv",
+          "expansion": 2,
+          "activation": "hswish"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 39,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r32 stem24 | ds-k7-hswish x3 c32 | ds-k3-hswish x1 c48 | mb2-k7-relu6 x3 c96 | head0",
+    "params": 124714,
+    "onnx_size_mb": 0.4789,
+    "state_dict_size_mb": 0.5227,
+    "latency_ms": 1.528,
+    "latency_p95_ms": 1.7887,
+    "torch_latency_ms": 4.2666,
+    "peak_memory_mb": 10.8047,
+    "process_peak_mb": 64.3984,
+    "val_acc": 80.76,
+    "score": 83.7449,
+    "profile_time_s": 1.91,
+    "train_time_s": 59.1,
+    "config": {
+      "resolution": 32,
+      "stem_channels": 24,
+      "num_stages": 3,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 3,
+          "channels": 32,
+          "kernel": 7,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 1,
+          "channels": 48,
+          "kernel": 3,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 3,
+          "channels": 96,
+          "kernel": 7,
+          "block": "mbconv",
+          "expansion": 2,
+          "activation": "relu6"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 40,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r32 stem16 | mb2-k7-hswish x1 c16 | conv-k3-silu x1 c48 | mb2-k5-relu x2 c64 | head0",
+    "params": 44762,
+    "onnx_size_mb": 0.1731,
+    "state_dict_size_mb": 0.1978,
+    "latency_ms": 0.6173,
+    "latency_p95_ms": 0.7905,
+    "torch_latency_ms": 2.4868,
+    "peak_memory_mb": 10.3242,
+    "process_peak_mb": 63.8984,
+    "val_acc": 77.22,
+    "score": 85.509,
+    "profile_time_s": 1.48,
+    "train_time_s": 31.1,
+    "config": {
+      "resolution": 32,
+      "stem_channels": 16,
+      "num_stages": 3,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 1,
+          "channels": 16,
+          "kernel": 7,
+          "block": "mbconv",
+          "expansion": 2,
+          "activation": "hswish"
+        },
+        {
+          "depth": 1,
+          "channels": 48,
+          "kernel": 3,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "silu"
+        },
+        {
+          "depth": 2,
+          "channels": 64,
+          "kernel": 5,
+          "block": "mbconv",
+          "expansion": 2,
+          "activation": "relu"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 41,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r24 stem32 | ds-k5-hswish x1 c32 | conv-k3-hswish x1 c48 | ds-k7-relu6 x3 c96 | head0",
+    "params": 53626,
+    "onnx_size_mb": 0.2092,
+    "state_dict_size_mb": 0.2296,
+    "latency_ms": 0.3425,
+    "latency_p95_ms": 0.4054,
+    "torch_latency_ms": 2.2205,
+    "peak_memory_mb": 10.1289,
+    "process_peak_mb": 63.3945,
+    "val_acc": 73.2,
+    "score": 83.165,
+    "profile_time_s": 1.65,
+    "train_time_s": 23.9,
+    "config": {
+      "resolution": 24,
+      "stem_channels": 32,
+      "num_stages": 3,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 1,
+          "channels": 32,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 1,
+          "channels": 48,
+          "kernel": 3,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 3,
+          "channels": 96,
+          "kernel": 7,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "relu6"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 42,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r32 stem32 | ds-k5-hswish x3 c32 | conv-k3-relu6 x1 c32 | mb4-k7-relu6 x2 c128 | head0",
+    "params": 203338,
+    "onnx_size_mb": 0.7753,
+    "state_dict_size_mb": 0.8167,
+    "latency_ms": 1.7007,
+    "latency_p95_ms": 2.5632,
+    "torch_latency_ms": 3.8316,
+    "peak_memory_mb": 11.918,
+    "process_peak_mb": 65.3906,
+    "val_acc": 82.54,
+    "score": 84.3174,
+    "profile_time_s": 1.82,
+    "train_time_s": 50.4,
+    "config": {
+      "resolution": 32,
+      "stem_channels": 32,
+      "num_stages": 3,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 3,
+          "channels": 32,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 1,
+          "channels": 32,
+          "kernel": 3,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "relu6"
+        },
+        {
+          "depth": 2,
+          "channels": 128,
+          "kernel": 7,
+          "block": "mbconv",
+          "expansion": 4,
+          "activation": "relu6"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 43,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r32 stem16 | ds-k5-hswish x1 c48 | conv-k5-relu x1 c48 | mb4-k5-silu x1 c64 | head0",
+    "params": 87306,
+    "onnx_size_mb": 0.3343,
+    "state_dict_size_mb": 0.3515,
+    "latency_ms": 1.0031,
+    "latency_p95_ms": 1.2182,
+    "torch_latency_ms": 2.242,
+    "peak_memory_mb": 10.5664,
+    "process_peak_mb": 63.9961,
+    "val_acc": 73.42,
+    "score": 78.3134,
+    "profile_time_s": 1.47,
+    "train_time_s": 22.0,
+    "config": {
+      "resolution": 32,
+      "stem_channels": 16,
+      "num_stages": 3,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 1,
+          "channels": 48,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 1,
+          "channels": 48,
+          "kernel": 5,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "relu"
+        },
+        {
+          "depth": 1,
+          "channels": 64,
+          "kernel": 5,
+          "block": "mbconv",
+          "expansion": 4,
+          "activation": "silu"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 44,
+    "status": "rejected",
+    "reject_reason": "latency 2.10>2.0ms; size 2.66>1.5MB",
+    "arch": "r32 stem32 | mb6-k5-relu x1 c32 | conv-k3-hswish x1 c48 | conv-k7-relu6 x3 c64 | ds-k7-relu6 x3 c192 | head0",
+    "params": 697034,
+    "onnx_size_mb": 2.6597,
+    "state_dict_size_mb": 2.6995,
+    "latency_ms": 2.0975,
+    "latency_p95_ms": 2.6508,
+    "torch_latency_ms": 5.5691,
+    "peak_memory_mb": 15.0547,
+    "process_peak_mb": 68.4492,
+    "val_acc": null,
+    "score": null,
+    "profile_time_s": 2.02,
+    "train_time_s": null,
+    "config": {
+      "resolution": 32,
+      "stem_channels": 32,
+      "num_stages": 4,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 1,
+          "channels": 32,
+          "kernel": 5,
+          "block": "mbconv",
+          "expansion": 6,
+          "activation": "relu"
+        },
+        {
+          "depth": 1,
+          "channels": 48,
+          "kernel": 3,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 3,
+          "channels": 64,
+          "kernel": 7,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "relu6"
+        },
+        {
+          "depth": 3,
+          "channels": 192,
+          "kernel": 7,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "relu6"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 45,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r28 stem32 | ds-k5-hswish x2 c32 | ds-k3-hswish x1 c48 | mb4-k7-relu6 x3 c64 | ds-k7-hswish x1 c192 | head256",
+    "params": 199722,
+    "onnx_size_mb": 0.76,
+    "state_dict_size_mb": 0.8167,
+    "latency_ms": 0.9807,
+    "latency_p95_ms": 1.1985,
+    "torch_latency_ms": 3.4432,
+    "peak_memory_mb": 11.9688,
+    "process_peak_mb": 65.2227,
+    "val_acc": 81.96,
+    "score": 86.096,
+    "profile_time_s": 1.9,
+    "train_time_s": 49.4,
+    "config": {
+      "resolution": 28,
+      "stem_channels": 32,
+      "num_stages": 4,
+      "head_channels": 256,
+      "stages": [
+        {
+          "depth": 2,
+          "channels": 32,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 1,
+          "channels": 48,
+          "kernel": 3,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 3,
+          "channels": 64,
+          "kernel": 7,
+          "block": "mbconv",
+          "expansion": 4,
+          "activation": "relu6"
+        },
+        {
+          "depth": 1,
+          "channels": 192,
+          "kernel": 7,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "hswish"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 46,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r32 stem32 | ds-k5-hswish x1 c32 | conv-k5-hswish x1 c64 | mb4-k7-hswish x3 c64 | mb4-k5-relu6 x1 c128 | head0",
+    "params": 251722,
+    "onnx_size_mb": 0.9529,
+    "state_dict_size_mb": 1.0107,
+    "latency_ms": 1.6481,
+    "latency_p95_ms": 1.9336,
+    "torch_latency_ms": 4.3326,
+    "peak_memory_mb": 12.4492,
+    "process_peak_mb": 65.9062,
+    "val_acc": 85.32,
+    "score": 86.9347,
+    "profile_time_s": 1.88,
+    "train_time_s": 52.2,
+    "config": {
+      "resolution": 32,
+      "stem_channels": 32,
+      "num_stages": 4,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 1,
+          "channels": 32,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 1,
+          "channels": 64,
+          "kernel": 5,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 3,
+          "channels": 64,
+          "kernel": 7,
+          "block": "mbconv",
+          "expansion": 4,
+          "activation": "hswish"
+        },
+        {
+          "depth": 1,
+          "channels": 128,
+          "kernel": 5,
+          "block": "mbconv",
+          "expansion": 4,
+          "activation": "relu6"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 47,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r32 stem16 | ds-k7-hswish x1 c16 | conv-k5-hswish x1 c64 | mb6-k7-hswish x3 c64 | mb4-k5-hswish x1 c128 | head0",
+    "params": 294314,
+    "onnx_size_mb": 1.1104,
+    "state_dict_size_mb": 1.1786,
+    "latency_ms": 1.992,
+    "latency_p95_ms": 3.0065,
+    "torch_latency_ms": 4.7501,
+    "peak_memory_mb": 14.0898,
+    "process_peak_mb": 67.6055,
+    "val_acc": 84.74,
+    "score": 85.2684,
+    "profile_time_s": 2.06,
+    "train_time_s": 57.0,
+    "config": {
+      "resolution": 32,
+      "stem_channels": 16,
+      "num_stages": 4,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 1,
+          "channels": 16,
+          "kernel": 7,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 1,
+          "channels": 64,
+          "kernel": 5,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 3,
+          "channels": 64,
+          "kernel": 7,
+          "block": "mbconv",
+          "expansion": 6,
+          "activation": "hswish"
+        },
+        {
+          "depth": 1,
+          "channels": 128,
+          "kernel": 5,
+          "block": "mbconv",
+          "expansion": 4,
+          "activation": "hswish"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 48,
+    "status": "rejected",
+    "reject_reason": "latency 3.05>2.0ms; size 2.40>1.5MB",
+    "arch": "r32 stem32 | ds-k5-hswish x1 c32 | conv-k5-hswish x3 c64 | conv-k3-hswish x3 c96 | mb4-k5-relu6 x1 c256 | head0",
+    "params": 630410,
+    "onnx_size_mb": 2.4042,
+    "state_dict_size_mb": 2.4406,
+    "latency_ms": 3.0467,
+    "latency_p95_ms": 3.7204,
+    "torch_latency_ms": 5.8928,
+    "peak_memory_mb": 13.0664,
+    "process_peak_mb": 66.5,
+    "val_acc": null,
+    "score": null,
+    "profile_time_s": 2.17,
+    "train_time_s": null,
+    "config": {
+      "resolution": 32,
+      "stem_channels": 32,
+      "num_stages": 4,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 1,
+          "channels": 32,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 3,
+          "channels": 64,
+          "kernel": 5,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 3,
+          "channels": 96,
+          "kernel": 3,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 1,
+          "channels": 256,
+          "kernel": 5,
+          "block": "mbconv",
+          "expansion": 4,
+          "activation": "relu6"
+        }
+      ]
+    }
+  },
+  {
+    "trial": 49,
+    "status": "accepted",
+    "reject_reason": "",
+    "arch": "r32 stem32 | ds-k5-relu6 x3 c32 | conv-k5-hswish x1 c64 | mb4-k7-hswish x3 c64 | head0",
+    "params": 198154,
+    "onnx_size_mb": 0.755,
+    "state_dict_size_mb": 0.8044,
+    "latency_ms": 1.09,
+    "latency_p95_ms": 2.1846,
+    "torch_latency_ms": 3.2951,
+    "peak_memory_mb": 11.5,
+    "process_peak_mb": 65.168,
+    "val_acc": 85.48,
+    "score": 89.3323,
+    "profile_time_s": 1.71,
+    "train_time_s": 59.1,
+    "config": {
+      "resolution": 32,
+      "stem_channels": 32,
+      "num_stages": 3,
+      "head_channels": 0,
+      "stages": [
+        {
+          "depth": 3,
+          "channels": 32,
+          "kernel": 5,
+          "block": "dsconv",
+          "expansion": 1,
+          "activation": "relu6"
+        },
+        {
+          "depth": 1,
+          "channels": 64,
+          "kernel": 5,
+          "block": "conv",
+          "expansion": 1,
+          "activation": "hswish"
+        },
+        {
+          "depth": 3,
+          "channels": 64,
+          "kernel": 7,
+          "block": "mbconv",
+          "expansion": 4,
+          "activation": "hswish"
+        }
+      ]
+    }
+  }
+]

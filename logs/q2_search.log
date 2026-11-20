@@ -1,0 +1,93 @@
+Deployment constraints: {'max_latency_ms': 2.0, 'max_size_mb': 1.5, 'max_memory_mb': 16.0} | latency threads=1
+[I 2026-11-20 15:25:47,454] A new study created in memory with name: hw_aware_nas
+[trial   0] REJECTED (size 1.74>1.5MB) :: r28 stem32 | mb4-k5-relu x3 c16 | conv-k5-relu6 x2 c48 | mb4-k5-hswish x3 c96 | mb4-k7-relu x1 c256 | head0
+[trial 1] ep   8/8 | loss 0.574 train_acc 79.91 | test top1 79.68 top5 99.06 (best 79.68)  | 3.8s
+[trial   1] ACCEPTED val_acc=79.68 score=86.25 lat=0.717ms size=0.370MB mem=11.1MB :: r28 stem32 | ds-k3-hswish x2 c24 | mb4-k5-silu x1 c96 | ds-k5-relu x2 c96 | head512
+[trial   2] REJECTED (size 1.60>1.5MB) :: r32 stem16 | conv-k3-relu x2 c16 | conv-k7-relu x1 c48 | ds-k7-relu6 x1 c128 | conv-k3-relu x2 c128 | head512
+[trial 3] ep   8/8 | loss 0.607 train_acc 78.77 | test top1 78.50 top5 98.74 (best 78.50)  | 3.8s
+[trial   3] ACCEPTED val_acc=78.50 score=86.70 lat=0.458ms size=0.417MB mem=10.5MB :: r24 stem32 | ds-k5-hswish x1 c32 | conv-k3-relu x1 c48 | mb4-k7-relu6 x2 c64 | ds-k5-relu x1 c160 | head0
+[trial 4] ep   8/8 | loss 0.631 train_acc 77.96 | test top1 77.98 top5 98.78 (best 77.98)  | 4.7s
+[trial   4] ACCEPTED val_acc=77.98 score=82.98 lat=0.872ms size=0.534MB mem=11.3MB :: r24 stem24 | mb4-k3-silu x1 c16 | ds-k3-relu6 x2 c96 | mb4-k7-hswish x1 c96 | head256
+[trial   5] REJECTED (latency 5.80>2.0ms; size 11.91>1.5MB; memory 22.8>16.0MB) :: r24 stem16 | mb4-k7-hswish x3 c24 | mb2-k3-hswish x3 c64 | conv-k7-relu6 x3 c160 | head256
+[trial   6] REJECTED (latency 2.19>2.0ms; size 1.70>1.5MB) :: r28 stem24 | mb6-k3-relu6 x2 c24 | mb4-k3-hswish x2 c64 | mb4-k5-hswish x3 c128 | head256
+[trial   7] REJECTED (latency 5.01>2.0ms) :: r32 stem32 | conv-k7-hswish x3 c24 | ds-k3-relu x3 c96 | ds-k5-relu x1 c128 | head0
+[trial   8] REJECTED (latency 2.56>2.0ms; size 4.70>1.5MB) :: r28 stem32 | ds-k3-relu6 x3 c32 | ds-k7-relu x3 c64 | conv-k7-relu6 x3 c96 | head0
+[trial 9] ep   8/8 | loss 0.738 train_acc 74.08 | test top1 74.08 top5 98.40 (best 74.08)  | 2.3s
+[trial   9] ACCEPTED val_acc=74.08 score=76.14 lat=1.180ms size=1.419MB mem=11.3MB :: r28 stem16 | conv-k7-relu x1 c32 | ds-k3-hswish x1 c48 | conv-k3-silu x2 c160 | head256
+[trial 10] ep   8/8 | loss 0.527 train_acc 81.61 | test top1 81.46 top5 98.82 (best 81.46)  | 5.4s
+[trial  10] ACCEPTED val_acc=81.46 score=87.35 lat=0.752ms size=0.529MB mem=10.6MB :: r24 stem32 | ds-k5-hswish x3 c32 | conv-k3-relu6 x1 c48 | mb6-k7-relu6 x2 c64 | head0
+[trial 11] ep   8/8 | loss 0.690 train_acc 75.68 | test top1 75.94 top5 98.52 (best 75.94)  | 4.1s
+[trial  11] ACCEPTED val_acc=75.94 score=85.24 lat=0.396ms size=0.265MB mem=10.1MB :: r24 stem32 | ds-k5-relu x3 c32 | conv-k3-relu x1 c48 | mb6-k7-relu6 x1 c64 | head0
+[trial  12] REJECTED (size 1.56>1.5MB) :: r24 stem32 | ds-k5-hswish x1 c32 | mb6-k3-relu x3 c48 | mb6-k7-relu x2 c128 | ds-k5-relu x1 c160 | head0
+[trial 13] ep   8/8 | loss 0.633 train_acc 77.62 | test top1 77.82 top5 98.82 (best 77.82)  | 4.1s
+[trial  13] ACCEPTED val_acc=77.82 score=84.16 lat=0.623ms size=0.553MB mem=11.3MB :: r24 stem16 | ds-k5-hswish x3 c32 | ds-k3-relu6 x1 c48 | mb2-k5-relu6 x2 c160 | head0
+[trial  14] REJECTED (size 6.61>1.5MB; memory 17.2>16.0MB) :: r24 stem32 | ds-k5-hswish x3 c32 | ds-k3-relu6 x2 c64 | mb6-k7-silu x2 c64 | conv-k5-hswish x3 c160 | head256
+[trial 15] ep   8/8 | loss 0.745 train_acc 73.69 | test top1 74.42 top5 98.56 (best 74.42)  | 2.9s
+[trial  15] ACCEPTED val_acc=74.42 score=84.26 lat=0.260ms size=0.494MB mem=10.5MB :: r24 stem32 | ds-k3-hswish x1 c32 | ds-k3-relu x1 c48 | mb2-k3-relu6 x2 c64 | ds-k5-relu6 x2 c256 | head0
+[trial 16] ep   8/8 | loss 0.560 train_acc 80.34 | test top1 79.88 top5 98.80 (best 79.88)  | 3.8s
+[trial  16] ACCEPTED val_acc=79.88 score=83.57 lat=1.036ms size=0.813MB mem=11.6MB :: r24 stem32 | conv-k5-hswish x1 c48 | conv-k3-relu6 x1 c48 | mb4-k7-relu6 x2 c64 | mb2-k3-relu6 x1 c160 | head256
+[trial 17] ep   8/8 | loss 0.551 train_acc 80.77 | test top1 80.38 top5 98.72 (best 80.38)  | 5.3s
+[trial  17] ACCEPTED val_acc=80.38 score=85.49 lat=0.847ms size=0.590MB mem=10.9MB :: r24 stem32 | ds-k7-relu6 x3 c24 | conv-k5-relu6 x1 c48 | mb6-k7-silu x2 c64 | head0
+[trial 18] ep   8/8 | loss 0.562 train_acc 80.56 | test top1 80.36 top5 98.84 (best 80.36)  | 3.1s
+[trial  18] ACCEPTED val_acc=80.36 score=86.48 lat=0.594ms size=0.793MB mem=11.5MB :: r24 stem32 | ds-k5-hswish x1 c16 | conv-k5-relu x1 c48 | mb4-k5-relu6 x2 c128 | head0
+[trial  19] REJECTED (size 1.81>1.5MB) :: r24 stem16 | mb2-k5-hswish x3 c24 | conv-k3-relu x1 c48 | mb6-k3-relu6 x3 c64 | conv-k5-silu x1 c192 | head0
+[trial 20] ep   8/8 | loss 0.574 train_acc 79.93 | test top1 80.10 top5 98.98 (best 80.10)  | 3.7s
+[trial  20] ACCEPTED val_acc=80.10 score=84.39 lat=1.334ms size=0.304MB mem=10.6MB :: r32 stem32 | ds-k3-hswish x3 c32 | conv-k5-silu x1 c48 | mb2-k5-relu6 x2 c64 | head0
+[trial 21] ep   8/8 | loss 0.561 train_acc 80.49 | test top1 80.86 top5 99.14 (best 80.86)  | 2.8s
+[trial  21] ACCEPTED val_acc=80.86 score=88.43 lat=0.606ms size=0.338MB mem=10.2MB :: r32 stem16 | ds-k5-hswish x1 c16 | conv-k5-relu x1 c48 | mb4-k5-relu x2 c64 | head0
+[trial 22] ep   8/8 | loss 0.480 train_acc 83.26 | test top1 82.50 top5 99.16 (best 82.50)  | 3.4s
+[trial  22] ACCEPTED val_acc=82.50 score=86.55 lat=1.138ms size=0.560MB mem=10.9MB :: r32 stem16 | ds-k3-hswish x2 c16 | conv-k5-relu x2 c48 | mb4-k5-relu x2 c64 | head0
+[trial 23] ep   8/8 | loss 0.538 train_acc 81.22 | test top1 80.38 top5 99.16 (best 80.38)  | 2.8s
+[trial  23] ACCEPTED val_acc=80.38 score=86.76 lat=0.726ms size=0.416MB mem=10.5MB :: r32 stem16 | ds-k5-hswish x1 c16 | conv-k5-relu x1 c32 | mb4-k5-hswish x2 c64 | head512
+[trial 24] ep   8/8 | loss 0.509 train_acc 82.39 | test top1 81.74 top5 99.18 (best 81.74)  | 3.2s
+[trial  24] ACCEPTED val_acc=81.74 score=86.04 lat=0.993ms size=0.663MB mem=11.6MB :: r32 stem16 | ds-k5-hswish x1 c16 | conv-k5-relu x1 c32 | mb4-k5-hswish x2 c96 | head512
+[trial 25] ep   8/8 | loss 0.887 train_acc 68.52 | test top1 70.66 top5 98.02 (best 70.66)  | 2.0s
+[trial  25] ACCEPTED val_acc=70.66 score=81.17 lat=0.318ms size=0.145MB mem=9.6MB :: r32 stem16 | ds-k5-relu x1 c16 | conv-k5-relu x1 c64 | ds-k3-relu x2 c64 | head0
+[trial  26] REJECTED (size 2.52>1.5MB) :: r32 stem32 | mb2-k5-hswish x1 c16 | conv-k5-relu x1 c32 | mb6-k5-relu x2 c64 | mb6-k3-hswish x2 c192 | head0
+[trial 27] ep   8/8 | loss 0.611 train_acc 78.71 | test top1 79.46 top5 98.90 (best 79.46)  | 3.0s
+[trial  27] ACCEPTED val_acc=79.46 score=86.05 lat=0.782ms size=0.292MB mem=10.0MB :: r32 stem16 | conv-k5-silu x1 c16 | ds-k5-relu x1 c48 | mb4-k5-silu x2 c64 | head0
+[trial 28] ep   8/8 | loss 0.439 train_acc 84.84 | test top1 83.54 top5 99.08 (best 83.54)  | 4.8s
+[trial  28] ACCEPTED val_acc=83.54 score=86.54 lat=1.032ms size=1.344MB mem=12.2MB :: r32 stem16 | ds-k5-hswish x1 c16 | conv-k5-relu6 x1 c48 | mb4-k7-relu x2 c160 | head256
+[trial  29] REJECTED (latency 2.23>2.0ms; size 7.43>1.5MB; memory 19.5>16.0MB) :: r32 stem16 | ds-k5-hswish x1 c16 | mb6-k5-hswish x1 c48 | conv-k5-relu x2 c64 | conv-k7-silu x2 c160 | head0
+[trial  30] REJECTED (latency 2.80>2.0ms) :: r28 stem16 | mb6-k5-hswish x1 c24 | conv-k7-relu x3 c48 | mb6-k5-hswish x2 c64 | head0
+[trial 31] ep   8/8 | loss 0.532 train_acc 81.53 | test top1 80.94 top5 99.06 (best 80.94)  | 5.5s
+[trial  31] ACCEPTED val_acc=80.94 score=85.45 lat=1.049ms size=0.500MB mem=10.9MB :: r24 stem24 | ds-k5-hswish x3 c48 | conv-k3-silu x1 c64 | mb4-k7-hswish x2 c64 | head0
+[trial 32] ep   8/8 | loss 0.470 train_acc 83.80 | test top1 82.32 top5 99.04 (best 82.32)  | 5.3s
+[trial  32] ACCEPTED val_acc=82.32 score=86.70 lat=1.029ms size=0.590MB mem=10.9MB :: r32 stem32 | ds-k5-hswish x1 c32 | conv-k3-hswish x1 c48 | mb4-k7-relu6 x3 c64 | ds-k7-relu6 x1 c128 | head0
+[trial 33] ep   8/8 | loss 0.449 train_acc 84.31 | test top1 83.18 top5 99.08 (best 83.42)  | 4.9s
+[trial  33] ACCEPTED val_acc=83.18 score=86.57 lat=1.118ms size=0.870MB mem=11.4MB :: r32 stem32 | ds-k5-hswish x1 c32 | conv-k3-hswish x2 c48 | mb4-k5-relu x3 c64 | ds-k7-relu6 x1 c128 | head512
+[trial  34] REJECTED (latency 2.26>2.0ms; size 8.21>1.5MB; memory 18.8>16.0MB) :: r32 stem24 | ds-k5-hswish x1 c32 | conv-k3-silu x3 c32 | mb4-k7-relu6 x3 c64 | conv-k7-relu6 x3 c128 | head0
+[trial 35] ep   8/8 | loss 0.497 train_acc 82.75 | test top1 82.14 top5 99.02 (best 82.14)  | 6.6s
+[trial  35] ACCEPTED val_acc=82.14 score=87.02 lat=0.976ms size=0.502MB mem=10.9MB :: r32 stem32 | ds-k5-hswish x1 c32 | conv-k3-hswish x1 c48 | mb2-k7-relu6 x3 c96 | head0
+[trial 36] ep   8/8 | loss 0.473 train_acc 83.42 | test top1 82.92 top5 99.16 (best 82.92)  | 4.7s
+[trial  36] ACCEPTED val_acc=82.92 score=84.74 lat=1.878ms size=0.592MB mem=10.8MB :: r32 stem32 | conv-k5-relu x1 c32 | conv-k3-relu6 x1 c48 | mb2-k7-relu6 x3 c96 | head0
+[trial 37] ep   8/8 | loss 0.532 train_acc 81.43 | test top1 81.06 top5 99.00 (best 81.06)  | 4.4s
+[trial  37] ACCEPTED val_acc=81.06 score=84.38 lat=1.169ms size=0.770MB mem=11.6MB :: r24 stem32 | ds-k5-hswish x3 c32 | conv-k5-relu6 x3 c48 | mb2-k7-relu x2 c64 | head0
+[trial 38] ep   8/8 | loss 0.576 train_acc 79.95 | test top1 80.56 top5 98.96 (best 80.56)  | 3.8s
+[trial  38] ACCEPTED val_acc=80.56 score=84.44 lat=1.103ms size=0.632MB mem=11.4MB :: r32 stem32 | ds-k5-silu x1 c32 | conv-k3-hswish x1 c48 | mb2-k3-hswish x3 c96 | head512
+[trial 39] ep   8/8 | loss 0.520 train_acc 81.87 | test top1 80.76 top5 98.94 (best 80.76)  | 7.7s
+[trial  39] ACCEPTED val_acc=80.76 score=83.74 lat=1.528ms size=0.479MB mem=10.8MB :: r32 stem24 | ds-k7-hswish x3 c32 | ds-k3-hswish x1 c48 | mb2-k7-relu6 x3 c96 | head0
+[trial 40] ep   8/8 | loss 0.674 train_acc 76.39 | test top1 77.22 top5 98.80 (best 77.36)  | 3.3s
+[trial  40] ACCEPTED val_acc=77.22 score=85.51 lat=0.617ms size=0.173MB mem=10.3MB :: r32 stem16 | mb2-k7-hswish x1 c16 | conv-k3-silu x1 c48 | mb2-k5-relu x2 c64 | head0
+[trial 41] ep   8/8 | loss 0.746 train_acc 73.63 | test top1 73.20 top5 98.26 (best 73.20)  | 3.2s
+[trial  41] ACCEPTED val_acc=73.20 score=83.16 lat=0.343ms size=0.209MB mem=10.1MB :: r24 stem32 | ds-k5-hswish x1 c32 | conv-k3-hswish x1 c48 | ds-k7-relu6 x3 c96 | head0
+[trial 42] ep   8/8 | loss 0.468 train_acc 83.85 | test top1 82.54 top5 99.32 (best 82.54)  | 6.2s
+[trial  42] ACCEPTED val_acc=82.54 score=84.32 lat=1.701ms size=0.775MB mem=11.9MB :: r32 stem32 | ds-k5-hswish x3 c32 | conv-k3-relu6 x1 c32 | mb4-k7-relu6 x2 c128 | head0
+[trial 43] ep   8/8 | loss 0.746 train_acc 73.77 | test top1 73.42 top5 98.58 (best 73.42)  | 2.5s
+[trial  43] ACCEPTED val_acc=73.42 score=78.31 lat=1.003ms size=0.334MB mem=10.6MB :: r32 stem16 | ds-k5-hswish x1 c48 | conv-k5-relu x1 c48 | mb4-k5-silu x1 c64 | head0
+[trial  44] REJECTED (latency 2.10>2.0ms; size 2.66>1.5MB) :: r32 stem32 | mb6-k5-relu x1 c32 | conv-k3-hswish x1 c48 | conv-k7-relu6 x3 c64 | ds-k7-relu6 x3 c192 | head0
+[trial 45] ep   8/8 | loss 0.510 train_acc 82.11 | test top1 81.96 top5 98.92 (best 81.96)  | 6.0s
+[trial  45] ACCEPTED val_acc=81.96 score=86.10 lat=0.981ms size=0.760MB mem=12.0MB :: r28 stem32 | ds-k5-hswish x2 c32 | ds-k3-hswish x1 c48 | mb4-k7-relu6 x3 c64 | ds-k7-hswish x1 c192 | head256
+[trial 46] ep   8/8 | loss 0.376 train_acc 86.94 | test top1 85.32 top5 99.32 (best 85.32)  | 6.1s
+[trial  46] ACCEPTED val_acc=85.32 score=86.93 lat=1.648ms size=0.953MB mem=12.4MB :: r32 stem32 | ds-k5-hswish x1 c32 | conv-k5-hswish x1 c64 | mb4-k7-hswish x3 c64 | mb4-k5-relu6 x1 c128 | head0
+[trial 47] ep   8/8 | loss 0.389 train_acc 86.51 | test top1 84.74 top5 99.18 (best 84.76)  | 6.9s
+[trial  47] ACCEPTED val_acc=84.74 score=85.27 lat=1.992ms size=1.110MB mem=14.1MB :: r32 stem16 | ds-k7-hswish x1 c16 | conv-k5-hswish x1 c64 | mb6-k7-hswish x3 c64 | mb4-k5-hswish x1 c128 | head0
+[trial  48] REJECTED (latency 3.05>2.0ms; size 2.40>1.5MB) :: r32 stem32 | ds-k5-hswish x1 c32 | conv-k5-hswish x3 c64 | conv-k3-hswish x3 c96 | mb4-k5-relu6 x1 c256 | head0
+[trial 49] ep   8/8 | loss 0.378 train_acc 86.90 | test top1 85.48 top5 99.42 (best 85.54)  | 7.2s
+[trial  49] ACCEPTED val_acc=85.48 score=89.33 lat=1.090ms size=0.755MB mem=11.5MB :: r32 stem32 | ds-k5-relu6 x3 c32 | conv-k5-hswish x1 c64 | mb4-k7-hswish x3 c64 | head0
+
+=== NAS finished ===
+trials=50 accepted=35 rejected=15 time=23.2 min
+BEST trial 49: val_acc=85.48 score=89.33 lat=1.090ms size=0.755MB
+  r32 stem32 | ds-k5-relu6 x3 c32 | conv-k5-hswish x1 c64 | mb4-k7-hswish x3 c64 | head0
+Saved -> D:\Assignments & Projects\Edge Computing\Assignment 4\results\q2\best_architecture.json
